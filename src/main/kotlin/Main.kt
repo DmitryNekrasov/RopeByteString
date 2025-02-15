@@ -1,6 +1,7 @@
 import kotlinx.io.bytestring.ByteString
 import kotlinx.io.bytestring.isEmpty
 import kotlinx.io.ropebytestring.RopeByteString
+import kotlinx.io.ropebytestring.indices
 import kotlinx.io.ropebytestring.isEmpty
 import kotlinx.io.ropebytestring.toRopeByteString
 
@@ -75,8 +76,8 @@ fun main() {
         println("rbs: $rbs")
 
         var errorCount = 0
-        for (i in 0..rbs.size) {
-            for (j in i..rbs.size) {
+        for (i in rbs.indices) {
+            for (j in i..<rbs.size) {
                 val sub1 = bs.substring(i, j)
                 val sub2 = rbs.substring(i, j)
                 if (!sub1.toByteArray().contentEquals(sub2.toByteArray())) {

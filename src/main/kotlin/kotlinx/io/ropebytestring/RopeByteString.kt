@@ -193,6 +193,9 @@ class RopeByteString private constructor(
 public fun ByteArray.toRopeByteString(maxChunkSize: Int = RopeByteString.DEFAULT_MAX_CHUNK_SIZE): RopeByteString =
     RopeByteString(data = this, maxChunkSize = maxChunkSize)
 
+public val RopeByteString.indices: IntRange
+    get() = 0..<size
+
 public fun RopeByteString.isEmpty(): Boolean = size == 0
 
 public fun RopeByteString.isNotEmpty(): Boolean = !isEmpty()
