@@ -123,4 +123,10 @@ fun main() {
         println(s.startsWith(byteArrayOf(10, 20, 30)))
         println(s.endsWith(byteArrayOf(70, 80)))
     }
+
+    run {
+        val s = byteArrayOf(10, 20, 30, 40, 50, 60, 70, 80).toRopeByteString(3)
+        println(s.startsWith(byteArrayOf(10, 20, 30).toRopeByteString()))
+        println(s.endsWith(byteArrayOf(70, 80).toRopeByteString()))
+    }
 }

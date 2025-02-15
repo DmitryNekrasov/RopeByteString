@@ -59,8 +59,27 @@ class RopeByteString private constructor(
     }
 
     private fun rangeEquals(offset: Int, byteArray: ByteArray): Boolean {
-        for (i in 0..byteArray.lastIndex) {
+        for (i in byteArray.indices) {
             if (getByteAt(i + offset) != byteArray[i]) {
+                return false
+            }
+        }
+        return true
+    }
+
+    public fun startsWith(ropeByteString: RopeByteString): Boolean = when {
+        ropeByteString.size > size -> false
+        else -> rangeEquals(0, ropeByteString)
+    }
+
+    public fun endsWith(ropeByteString: RopeByteString): Boolean = when {
+        ropeByteString.size > size -> false
+        else -> rangeEquals(size - ropeByteString.size, ropeByteString)
+    }
+
+    private fun rangeEquals(offset: Int, ropeByteString: RopeByteString): Boolean {
+        for (i in ropeByteString.indices) {
+            if (getByteAt(i + offset) != ropeByteString.getByteAt(i)) {
                 return false
             }
         }
