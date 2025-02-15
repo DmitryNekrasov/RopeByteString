@@ -1,5 +1,7 @@
 package kotlinx.io.ropebytestring
 
+import kotlin.math.min
+
 public fun RopeByteString(vararg bytes: Byte): RopeByteString {
     return if (bytes.isEmpty()) RopeByteString.EMPTY else RopeByteString.wrap(bytes)
 }
@@ -87,7 +89,12 @@ class RopeByteString private constructor(
     }
 
     override fun compareTo(other: RopeByteString): Int {
-        TODO("comparing a bytestring with another bytestring is not implemented")
+        if (other === this) return 0
+        for (i in 0..<min(size, other.size)) {
+            val cmp = getByteAt(i) compareTo other.getByteAt(i)
+            if (cmp != 0) return cmp
+        }
+        return size.compareTo(other.size)
     }
 
     private var hashCode: Int = 0
