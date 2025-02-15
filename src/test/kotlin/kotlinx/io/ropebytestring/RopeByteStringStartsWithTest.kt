@@ -115,7 +115,6 @@ class RopeByteStringStartsWithTest {
             RopeByteString.DEFAULT_CHUNK_SIZE - 5,
             RopeByteString.DEFAULT_CHUNK_SIZE + 5
         )
-        val prefix = RopeByteString(*prefixData)
         assertTrue(rope.startsWith(RopeByteString(*data.copyOf(prefixData.size))))
     }
 
