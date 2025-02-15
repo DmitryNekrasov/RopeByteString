@@ -91,7 +91,7 @@ class RopeByteString private constructor(
     override fun compareTo(other: RopeByteString): Int {
         if (other === this) return 0
         for (i in 0..<min(size, other.size)) {
-            val cmp = getByteAt(i) compareTo other.getByteAt(i)
+            val cmp = getByteAt(i).toUByte() compareTo other.getByteAt(i).toUByte()
             if (cmp != 0) return cmp
         }
         return size.compareTo(other.size)
