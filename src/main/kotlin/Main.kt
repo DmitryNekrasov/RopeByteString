@@ -10,9 +10,9 @@ fun main() {
         val s2 = ByteString(4, 5, 6)
 
         println("empty = ${empty.isEmpty()}")
-        println("empty = $empty")
-        println("s1 = $s1")
-        println("s2 = $s2")
+        println("empty = $empty, hc = ${empty.hashCode()}")
+        println("s1 = $s1, hc = ${s1.hashCode()}")
+        println("s2 = $s2, hc = ${s2.hashCode()}")
 
         val bytes = ByteString(15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
         println(bytes)
@@ -32,9 +32,9 @@ fun main() {
         val s2 = RopeByteString(4, 5, 6)
 
         println("empty = ${empty.isEmpty()}")
-        println("empty = $empty")
-        println("s1 = $s1")
-        println("s2 = $s2")
+        println("empty = $empty, hc = ${empty.hashCode()}")
+        println("s1 = $s1, hc = ${s1.hashCode()}")
+        println("s2 = $s2, hc = ${s2.hashCode()}")
 
         val bytes = RopeByteString(15, 14, 13) + RopeByteString(12, 11) +
                 RopeByteString(10, 9, 8, 7) + RopeByteString(6, 5, 4) +

@@ -61,12 +61,22 @@ class RopeByteString private constructor(
     }
 
     override fun hashCode(): Int {
-        TODO("calculating a hash code for a bytestring is not implemented")
+        var hc = hashCode
+        if (hc == 0) {
+            hc = 1
+            for (i in 0..<size) {
+                hc = 31 * hc + getByteAt(i)
+            }
+            hashCode = hc
+        }
+        return hc
     }
 
     override fun compareTo(other: RopeByteString): Int {
         TODO("comparing a bytestring with another bytestring is not implemented")
     }
+
+    private var hashCode: Int = 0
 
     private fun StringBuilder.appendHexRepresentation(node: TreeNode) {
         with(node) {
