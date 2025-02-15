@@ -2,6 +2,7 @@ import kotlinx.io.bytestring.ByteString
 import kotlinx.io.bytestring.isEmpty
 import kotlinx.io.ropebytestring.RopeByteString
 import kotlinx.io.ropebytestring.isEmpty
+import kotlinx.io.ropebytestring.toRopeByteString
 
 fun main() {
     run {
@@ -98,6 +99,11 @@ fun main() {
 
     run {
         val s = RopeByteString(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21)
+        println(s)
+    }
+
+    run {
+        val s = byteArrayOf(1, 2, 3, 4, 5, 6, 7).toRopeByteString(2)
         println(s)
     }
 }
