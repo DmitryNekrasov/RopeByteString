@@ -233,7 +233,7 @@ class RopeByteString private constructor(
         internal fun wrap(byteArray: ByteArray) =
             if (byteArray.size <= DEFAULT_CHUNK_SIZE) RopeByteString(byteArray, null) else RopeByteString(byteArray)
 
-        internal const val DEFAULT_CHUNK_SIZE = 10
+        internal const val DEFAULT_CHUNK_SIZE = 1024
 
         internal const val MAX_CHUNK_SIZE = 8192
 
