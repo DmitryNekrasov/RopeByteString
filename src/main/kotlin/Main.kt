@@ -1,9 +1,6 @@
 import kotlinx.io.bytestring.ByteString
 import kotlinx.io.bytestring.isEmpty
-import kotlinx.io.ropebytestring.RopeByteString
-import kotlinx.io.ropebytestring.indices
-import kotlinx.io.ropebytestring.isEmpty
-import kotlinx.io.ropebytestring.toRopeByteString
+import kotlinx.io.ropebytestring.*
 
 fun main() {
     run {
