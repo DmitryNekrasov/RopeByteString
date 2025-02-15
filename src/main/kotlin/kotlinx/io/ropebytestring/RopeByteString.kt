@@ -15,8 +15,17 @@ class RopeByteString private constructor(
         data: ByteArray,
         startIndex: Int = 0,
         endIndex: Int = data.size,
-        maxChunkSize: Int = DEFAULT_MAX_CHUNK_SIZE
-    ) : this(merge(splitIntoChunks(data, startIndex, endIndex, maxChunkSize)))
+        chunkSize: Int = DEFAULT_CHUNK_SIZE
+    ) : this(
+        merge(
+            splitIntoChunks(
+                data,
+                startIndex,
+                endIndex,
+                if (chunkSize in 1..MAX_CHUNK_SIZE) chunkSize else DEFAULT_CHUNK_SIZE
+            )
+        )
+    )
 
     public val size: Int
         get(): Int = root.weight
@@ -224,9 +233,11 @@ class RopeByteString private constructor(
         internal val EMPTY: RopeByteString = RopeByteString(ByteArray(0), null)
 
         internal fun wrap(byteArray: ByteArray) =
-            if (byteArray.size <= DEFAULT_MAX_CHUNK_SIZE) RopeByteString(byteArray, null) else RopeByteString(byteArray)
+            if (byteArray.size <= DEFAULT_CHUNK_SIZE) RopeByteString(byteArray, null) else RopeByteString(byteArray)
 
-        internal const val DEFAULT_MAX_CHUNK_SIZE = 10
+        internal const val DEFAULT_CHUNK_SIZE = 10
+
+        internal const val MAX_CHUNK_SIZE = 8192
 
         private const val HEX_DIGITS = "0123456789abcdef"
 
@@ -234,10 +245,10 @@ class RopeByteString private constructor(
             data: ByteArray,
             startIndex: Int,
             endIndex: Int,
-            maxChunkSize: Int
+            chunkSize: Int
         ): List<TreeNode> {
-            return (startIndex..<endIndex step maxChunkSize).map { i ->
-                TreeNode.createLeaf(data.copyOfRange(i, min(endIndex, i + maxChunkSize)))
+            return (startIndex..<endIndex step chunkSize).map { i ->
+                TreeNode.createLeaf(data.copyOfRange(i, min(endIndex, i + chunkSize)))
             }
         }
 
@@ -253,8 +264,8 @@ class RopeByteString private constructor(
     }
 }
 
-public fun ByteArray.toRopeByteString(maxChunkSize: Int = RopeByteString.DEFAULT_MAX_CHUNK_SIZE): RopeByteString =
-    RopeByteString(data = this, maxChunkSize = maxChunkSize)
+public fun ByteArray.toRopeByteString(chunkSize: Int = RopeByteString.DEFAULT_CHUNK_SIZE): RopeByteString =
+    RopeByteString(data = this, chunkSize = chunkSize)
 
 public val RopeByteString.indices: IntRange
     get() = 0..<size
