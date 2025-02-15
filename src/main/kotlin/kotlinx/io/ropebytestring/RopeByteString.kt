@@ -37,20 +37,22 @@ class RopeByteString private constructor(
     }
 
     public fun toByteArray(): ByteArray {
-        TODO("converting a bytestring to RopeByteArray is not implemented")
+        val result = ByteArray(size)
+        for (i in 0..<size) {
+            result[i] = getByteAt(i)
+        }
+        return result
     }
 
     override fun toString(): String {
         if (isEmpty()) {
-//            return "RopeByteString(size=0)"
-            return "ByteString(size=0)"
+            return "RopeByteString(size=0)"
         }
         // format: "RopeByteString(size=XXX hex=YYYY)"
         val sizeStr = size.toString()
         val len = 26 + sizeStr.length + size * 2
         return with(StringBuilder(len)) {
-//            append("RopeByteString(size=")
-            append("ByteString(size=")
+            append("RopeByteString(size=")
             append(sizeStr)
             append(" hex=")
             appendHexRepresentation(root)

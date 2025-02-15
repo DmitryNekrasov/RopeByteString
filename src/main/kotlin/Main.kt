@@ -78,7 +78,7 @@ fun main() {
             for (j in i..rbs.size) {
                 val sub1 = bs.substring(i, j)
                 val sub2 = rbs.substring(i, j)
-                if (sub1.toString() != sub2.toString()) {
+                if (!sub1.toByteArray().contentEquals(sub2.toByteArray())) {
                     errorCount++
                 }
             }
