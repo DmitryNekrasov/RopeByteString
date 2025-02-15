@@ -126,7 +126,7 @@ class RopeByteString private constructor(
     companion object {
         internal val EMPTY: RopeByteString = RopeByteString(ByteArray(0), null)
 
-        fun wrap(byteArray: ByteArray) = RopeByteString(byteArray, null)
+        internal fun wrap(byteArray: ByteArray) = RopeByteString(byteArray, null)
 
         private const val HEX_DIGITS = "0123456789abcdef"
     }
