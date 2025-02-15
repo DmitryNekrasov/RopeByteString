@@ -46,4 +46,43 @@ fun main() {
         }
         println("${bytes[bytes.size - 1]}]")
     }
+
+    run {
+        val bs = run {
+            ByteString(7, 12, 2, 10, 6, 11, 1, 5, 8, 15, 3, 13, 9, 14, 4)
+        }
+
+        val rbs = run {
+            val c1 = RopeByteString(7, 12)
+            val c2 = RopeByteString(2)
+            val c3 = RopeByteString(10)
+            val c4 = RopeByteString(6, 11)
+            val c5 = RopeByteString(1, 5)
+            val c6 = RopeByteString(8, 15)
+            val c7 = RopeByteString(3, 13)
+            val c8 = RopeByteString(9, 14, 4)
+            val b1 = c1 + c2
+            val b2 = c3 + c4
+            val b3 = c5 + c6
+            val b4 = c7 + c8
+            val a1 = b1 + b2
+            val a2 = b3 + b4
+            a1 + a2
+        }
+
+        println(" bs: $bs")
+        println("rbs: $rbs")
+
+        var errorCount = 0
+        for (i in 0..rbs.size) {
+            for (j in i..rbs.size) {
+                val sub1 = bs.substring(i, j)
+                val sub2 = rbs.substring(i, j)
+                if (sub1.toString() != sub2.toString()) {
+                    errorCount++
+                }
+            }
+        }
+        println("errorCount = $errorCount")
+    }
 }

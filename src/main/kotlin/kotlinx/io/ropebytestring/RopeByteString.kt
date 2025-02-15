@@ -16,7 +16,14 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
         RopeByteString(TreeNode.createBranch(root, other.root))
 
     public fun substring(startIndex: Int, endIndex: Int = size): RopeByteString {
-        TODO("substring extraction is not implemented")
+        require(startIndex <= endIndex) { "invalid range: $startIndex > $endIndex" }
+        require(startIndex >= 0) { "start index cannot be negative: $startIndex" }
+        require(endIndex <= size) { "end index out of bounds: $endIndex" }
+
+        return when {
+            startIndex == endIndex -> EMPTY
+            else -> RopeByteString(substring(root, startIndex, endIndex))
+        }
     }
 
     public operator fun get(index: Int): Byte {
@@ -30,13 +37,15 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
 
     override fun toString(): String {
         if (isEmpty()) {
-            return "RopeByteString(size=0)"
+//            return "RopeByteString(size=0)"
+            return "ByteString(size=0)"
         }
         // format: "RopeByteString(size=XXX hex=YYYY)"
         val sizeStr = size.toString()
         val len = 26 + sizeStr.length + size * 2
         return with(StringBuilder(len)) {
-            append("RopeByteString(size=")
+//            append("RopeByteString(size=")
+            append("ByteString(size=")
             append(sizeStr)
             append(" hex=")
             appendHexRepresentation(root)
@@ -86,6 +95,21 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
 
         return traverseToLeaf(root, index)
     }
+
+    private fun substring(node: TreeNode, startIndex: Int, endIndex: Int): TreeNode =
+        with(node) {
+            when (this) {
+                is TreeNode.Leaf -> TreeNode.createLeaf(data.copyOfRange(startIndex, endIndex))
+                is TreeNode.Branch -> when {
+                    endIndex <= left.weight -> substring(left, startIndex, endIndex)
+                    startIndex >= left.weight -> substring(right, startIndex - left.weight, endIndex - left.weight)
+                    else -> TreeNode.createBranch(
+                        substring(left, startIndex, left.weight),
+                        substring(right, 0, endIndex - left.weight)
+                    )
+                }
+            }
+        }
 
     private constructor(data: ByteArray, @Suppress("UNUSED_PARAMETER") dummy: Any?) :
             this(TreeNode.createLeaf(data))
