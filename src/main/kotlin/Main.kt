@@ -104,4 +104,17 @@ fun main() {
         val s = byteArrayOf(1, 2, 3, 4, 5, 6, 7).toRopeByteString(2)
         println(s)
     }
+
+    run {
+        val s1 = RopeByteString(1)
+        val s2 = RopeByteString(2)
+        val s3 = RopeByteString(3)
+        val s4 = RopeByteString(4)
+        val s5 = RopeByteString(5)
+        val s6 = RopeByteString(6)
+        val s7 = RopeByteString(7)
+        val s8 = RopeByteString(8)
+        val result = s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8
+        println(result)
+    }
 }

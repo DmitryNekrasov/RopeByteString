@@ -22,7 +22,7 @@ class RopeByteString private constructor(
         get(): Int = root.weight
 
     public operator fun plus(other: RopeByteString): RopeByteString =
-        RopeByteString(TreeNode.createBranch(root, other.root))
+        TreeNode.createBranch(root, other.root).toRopeByteString()
 
     public fun substring(startIndex: Int, endIndex: Int = size): RopeByteString {
         require(startIndex <= endIndex) { "invalid range: $startIndex > $endIndex" }
@@ -30,7 +30,7 @@ class RopeByteString private constructor(
         require(endIndex <= size) { "end index out of bounds: $endIndex" }
         return when {
             startIndex == endIndex -> EMPTY
-            else -> RopeByteString(substring(root, startIndex, endIndex))
+            else -> substring(root, startIndex, endIndex).toRopeByteString()
         }
     }
 
@@ -157,6 +157,26 @@ class RopeByteString private constructor(
             }
         }
 
+    private fun collectAllLeaves(): List<TreeNode> {
+        val leaves = mutableListOf<TreeNode>()
+
+        fun collectRecursive(node: TreeNode) {
+            when (node) {
+                is TreeNode.Leaf -> leaves += node
+                is TreeNode.Branch -> {
+                    collectRecursive(node.left)
+                    collectRecursive(node.right)
+                }
+            }
+        }
+
+        collectRecursive(root)
+
+        return leaves
+    }
+
+    private fun rebalance(): RopeByteString = RopeByteString(merge(collectAllLeaves()))
+
     private constructor(data: ByteArray, @Suppress("UNUSED_PARAMETER") dummy: Any?) :
             this(TreeNode.createLeaf(data))
 
@@ -187,6 +207,9 @@ class RopeByteString private constructor(
             val mid = start + range / 2
             return TreeNode.createBranch(merge(nodes, start, mid), merge(nodes, mid, end))
         }
+
+        private fun TreeNode.toRopeByteString(): RopeByteString =
+            if (isBalanced()) RopeByteString(this) else RopeByteString(this).rebalance()
     }
 }
 

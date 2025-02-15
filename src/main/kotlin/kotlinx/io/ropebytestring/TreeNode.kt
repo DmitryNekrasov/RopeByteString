@@ -24,3 +24,8 @@ internal sealed class TreeNode {
         fun createLeaf(data: ByteArray) = Leaf(data)
     }
 }
+
+internal fun TreeNode.isBalanced(): Boolean = when (this) {
+    is TreeNode.Leaf -> true
+    is TreeNode.Branch -> left.depth.toDouble() / right.depth in 0.5..2.0
+}
