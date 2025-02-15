@@ -10,7 +10,7 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
             this(data.copyOfRange(startIndex, endIndex), null)
 
     public val size: Int
-        get(): Int = TODO("size getter is not implemented")
+        get(): Int = root.weight
 
     public operator fun plus(other: RopeByteString): RopeByteString {
         TODO("concatenation is not implemented")
@@ -58,10 +58,6 @@ public fun ByteArray.toRopeByteString(): RopeByteString {
     TODO("converting a ByteArray to RopeByteString is not implemented")
 }
 
-public fun RopeByteString.isEmpty(): Boolean {
-    TODO("checking if a bytestring is empty is not implemented")
-}
+public fun RopeByteString.isEmpty(): Boolean = size == 0
 
-public fun RopeByteString.isNotEmpty(): Boolean {
-    TODO("checking if a bytestring is not empty is not implemented")
-}
+public fun RopeByteString.isNotEmpty(): Boolean = !isEmpty()

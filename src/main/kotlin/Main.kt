@@ -1,6 +1,7 @@
 import kotlinx.io.bytestring.ByteString
 import kotlinx.io.bytestring.isEmpty
 import kotlinx.io.ropebytestring.RopeByteString
+import kotlinx.io.ropebytestring.isEmpty
 
 fun main() {
     run {
@@ -28,5 +29,9 @@ fun main() {
         val empty = RopeByteString()
         val s1 = RopeByteString(1, 2, 3)
         val s2 = RopeByteString(4, 5, 6)
+
+        println("empty = ${empty.isEmpty()}")
+        println("s1 = $s1")
+        println("s2 = $s2")
     }
 }
