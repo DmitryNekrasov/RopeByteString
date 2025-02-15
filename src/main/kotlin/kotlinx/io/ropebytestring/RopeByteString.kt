@@ -127,7 +127,7 @@ class RopeByteString private constructor(
     private fun getByteAt(index: Int): Byte {
         if (index in cache) return cache[index]
 
-        tailrec fun traverseToLeaf(node: TreeNode, idx: Int): Byte = with(node) {
+        fun traverseToLeaf(node: TreeNode, idx: Int): Byte = with(node) {
             when (this) {
                 is TreeNode.Leaf -> {
                     cache.update(data, index, idx)
