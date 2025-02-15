@@ -1,5 +1,9 @@
 package kotlinx.io.ropebytestring
 
+public fun RopeByteString(vararg bytes: Byte): RopeByteString {
+    TODO("creating a bytestring from a vararg of bytes is not implemented")
+}
+
 class RopeByteString : Comparable<RopeByteString> {
 
     public val size: Int
