@@ -11,8 +11,12 @@ class RopeByteString private constructor(
     private val cache: RopeByteStringCache = LastChunkRopeByteStringCache()
 ) : Comparable<RopeByteString> {
 
-    constructor(data: ByteArray, startIndex: Int = 0, endIndex: Int = data.size) :
-            this(data.copyOfRange(startIndex, endIndex), null)
+    constructor(
+        data: ByteArray,
+        startIndex: Int = 0,
+        endIndex: Int = data.size,
+        maxChunkSize: Int = DEFAULT_MAX_CHUNK_SIZE
+    ) : this(merge(splitIntoChunks(data, startIndex, endIndex, maxChunkSize)))
 
     public val size: Int
         get(): Int = root.weight
@@ -159,15 +163,35 @@ class RopeByteString private constructor(
     companion object {
         internal val EMPTY: RopeByteString = RopeByteString(ByteArray(0), null)
 
-        internal fun wrap(byteArray: ByteArray) = RopeByteString(byteArray, null)
+        internal fun wrap(byteArray: ByteArray) =
+            if (byteArray.size <= DEFAULT_MAX_CHUNK_SIZE) RopeByteString(byteArray, null) else RopeByteString(byteArray)
+
+        internal const val DEFAULT_MAX_CHUNK_SIZE = 10
 
         private const val HEX_DIGITS = "0123456789abcdef"
+
+        private fun splitIntoChunks(
+            data: ByteArray,
+            startIndex: Int,
+            endIndex: Int,
+            maxChunkSize: Int
+        ): List<TreeNode> {
+            return (startIndex..<endIndex step maxChunkSize).map { i ->
+                TreeNode.createLeaf(data.copyOfRange(i, min(endIndex, i + maxChunkSize)))
+            }
+        }
+
+        private fun merge(nodes: List<TreeNode>, start: Int = 0, end: Int = nodes.size): TreeNode {
+            val range = end - start
+            if (range == 1) return nodes[start]
+            val mid = start + range / 2
+            return TreeNode.createBranch(merge(nodes, start, mid), merge(nodes, mid, end))
+        }
     }
 }
 
-public fun ByteArray.toRopeByteString(): RopeByteString {
-    TODO("converting a ByteArray to RopeByteString is not implemented")
-}
+public fun ByteArray.toRopeByteString(maxChunkSize: Int = RopeByteString.DEFAULT_MAX_CHUNK_SIZE): RopeByteString =
+    RopeByteString(data = this, maxChunkSize = maxChunkSize)
 
 public fun RopeByteString.isEmpty(): Boolean = size == 0
 
