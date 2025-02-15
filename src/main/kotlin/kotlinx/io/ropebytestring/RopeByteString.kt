@@ -20,6 +20,18 @@ class RopeByteString {
     public fun toByteArray(): ByteArray {
         TODO("converting a bytestring to RopeByteArray is not implemented")
     }
+
+    override fun toString(): String {
+        TODO("converting a bytestring to a string is not implemented")
+    }
+
+    override fun equals(other: Any?): Boolean {
+        TODO("comparing a bytestring with another object is not implemented")
+    }
+
+    override fun hashCode(): Int {
+        TODO("calculating a hash code for a bytestring is not implemented")
+    }
 }
 
 public fun ByteArray.toRopeByteString(): RopeByteString {
