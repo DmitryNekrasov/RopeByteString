@@ -41,3 +41,11 @@ class RopeByteString : Comparable<RopeByteString> {
 public fun ByteArray.toRopeByteString(): RopeByteString {
     TODO("converting a ByteArray to RopeByteString is not implemented")
 }
+
+public fun RopeByteString.isEmpty(): Boolean {
+    TODO("checking if a bytestring is empty is not implemented")
+}
+
+public fun RopeByteString.isNotEmpty(): Boolean {
+    TODO("checking if a bytestring is not empty is not implemented")
+}
