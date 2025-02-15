@@ -58,32 +58,16 @@ class RopeByteString private constructor(
         else -> rangeEquals(size - byteArray.size, byteArray)
     }
 
-    private fun rangeEquals(offset: Int, byteArray: ByteArray): Boolean {
-        for (i in byteArray.indices) {
-            if (getByteAt(i + offset) != byteArray[i]) {
-                return false
-            }
-        }
-        return true
-    }
-
     public fun startsWith(ropeByteString: RopeByteString): Boolean = when {
         ropeByteString.size > size -> false
+        ropeByteString.size == size -> equals(ropeByteString)
         else -> rangeEquals(0, ropeByteString)
     }
 
     public fun endsWith(ropeByteString: RopeByteString): Boolean = when {
         ropeByteString.size > size -> false
+        ropeByteString.size == size -> equals(ropeByteString)
         else -> rangeEquals(size - ropeByteString.size, ropeByteString)
-    }
-
-    private fun rangeEquals(offset: Int, ropeByteString: RopeByteString): Boolean {
-        for (i in ropeByteString.indices) {
-            if (getByteAt(i + offset) != ropeByteString.getByteAt(i)) {
-                return false
-            }
-        }
-        return true
     }
 
     override fun toString(): String {
@@ -194,6 +178,24 @@ class RopeByteString private constructor(
                 }
             }
         }
+
+    private fun rangeEquals(offset: Int, byteArray: ByteArray): Boolean {
+        for (i in byteArray.indices) {
+            if (getByteAt(i + offset) != byteArray[i]) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun rangeEquals(offset: Int, ropeByteString: RopeByteString): Boolean {
+        for (i in ropeByteString.indices) {
+            if (getByteAt(i + offset) != ropeByteString.getByteAt(i)) {
+                return false
+            }
+        }
+        return true
+    }
 
     private fun collectAllLeaves(): List<TreeNode> {
         val leaves = mutableListOf<TreeNode>()
