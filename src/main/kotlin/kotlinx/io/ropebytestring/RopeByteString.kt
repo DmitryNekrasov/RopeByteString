@@ -34,9 +34,7 @@ class RopeByteString private constructor(
         TreeNode.createBranch(root, other.root).toRopeByteString()
 
     public fun substring(startIndex: Int, endIndex: Int = size): RopeByteString {
-        require(startIndex <= endIndex) { "invalid range: $startIndex > $endIndex" }
-        require(startIndex >= 0) { "start index cannot be negative: $startIndex" }
-        require(endIndex <= size) { "end index out of bounds: $endIndex" }
+        requireRange(startIndex, endIndex, size)
         return when {
             startIndex == endIndex -> EMPTY
             else -> substring(root, startIndex, endIndex).toRopeByteString()
@@ -44,12 +42,12 @@ class RopeByteString private constructor(
     }
 
     public operator fun get(index: Int): Byte {
-        require(index in 0..<size) { "index ($index) is out of rope byte string bounds: [0..$size)" }
+        require(index in indices) { "index ($index) is out of rope byte string bounds: [0..$size)" }
         return getByteAt(index)
     }
 
     public fun toByteArray(startIndex: Int = 0, endIndex: Int = size): ByteArray {
-        require(startIndex <= endIndex) { "startIndex ($startIndex) > endIndex ($endIndex)" }
+        requireRange(startIndex, endIndex, size)
         val result = ByteArray(size)
         for (i in startIndex..<endIndex) {
             result[i] = getByteAt(i)
@@ -104,7 +102,7 @@ class RopeByteString private constructor(
         if (other.size != size) return false
         if (other.hashCode != 0 && hashCode != 0 && other.hashCode != hashCode) return false
 
-        for (i in 0..<size) {
+        for (i in indices) {
             if (other.getByteAt(i) != getByteAt(i)) {
                 return false
             }
@@ -117,7 +115,7 @@ class RopeByteString private constructor(
         var hc = hashCode
         if (hc == 0) {
             hc = 1
-            for (i in 0..<size) {
+            for (i in indices) {
                 hc = 31 * hc + getByteAt(i)
             }
             hashCode = hc
@@ -241,12 +239,19 @@ class RopeByteString private constructor(
 
         private const val HEX_DIGITS = "0123456789abcdef"
 
+        private fun requireRange(startIndex: Int, endIndex: Int, upperBound: Int) {
+            require(startIndex <= endIndex) { "invalid range: $startIndex > $endIndex" }
+            require(startIndex >= 0) { "start index cannot be negative: $startIndex" }
+            require(endIndex <= upperBound) { "end index out of bounds: $endIndex" }
+        }
+
         private fun splitIntoChunks(
             data: ByteArray,
             startIndex: Int,
             endIndex: Int,
             chunkSize: Int
         ): List<TreeNode> {
+            requireRange(startIndex, endIndex, data.size)
             return (startIndex..<endIndex step chunkSize).map { i ->
                 TreeNode.createLeaf(data.copyOfRange(i, min(endIndex, i + chunkSize)))
             }
