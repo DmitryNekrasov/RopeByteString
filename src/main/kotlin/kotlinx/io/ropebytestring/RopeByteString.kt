@@ -48,6 +48,25 @@ class RopeByteString private constructor(
         return result
     }
 
+    public fun startsWith(byteArray: ByteArray): Boolean = when {
+        byteArray.size > size -> false
+        else -> rangeEquals(0, byteArray)
+    }
+
+    public fun endsWith(byteArray: ByteArray): Boolean = when {
+        byteArray.size > size -> false
+        else -> rangeEquals(size - byteArray.size, byteArray)
+    }
+
+    private fun rangeEquals(offset: Int, byteArray: ByteArray): Boolean {
+        for (i in 0..byteArray.lastIndex) {
+            if (getByteAt(i + offset) != byteArray[i]) {
+                return false
+            }
+        }
+        return true
+    }
+
     override fun toString(): String {
         if (isEmpty()) {
             return "RopeByteString(size=0)"
