@@ -1,6 +1,6 @@
 package kotlinx.io.ropebytestring
 
-class RopeByteString {
+class RopeByteString : Comparable<RopeByteString> {
 
     public val size: Int
         get(): Int = TODO("size getter is not implemented")
@@ -31,6 +31,10 @@ class RopeByteString {
 
     override fun hashCode(): Int {
         TODO("calculating a hash code for a bytestring is not implemented")
+    }
+
+    override fun compareTo(other: RopeByteString): Int {
+        TODO("comparing a bytestring with another bytestring is not implemented")
     }
 }
 
