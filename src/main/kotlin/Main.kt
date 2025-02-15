@@ -85,4 +85,12 @@ fun main() {
         }
         println("errorCount = $errorCount")
     }
+
+    run {
+        val s1 = RopeByteString(1, 2, 3)
+        val s2 = RopeByteString(4, 5)
+        val s3 = RopeByteString(1, 2)
+        val s4 = RopeByteString(3, 4, 5)
+        println(s1 + s2 == s3 + s4)
+    }
 }

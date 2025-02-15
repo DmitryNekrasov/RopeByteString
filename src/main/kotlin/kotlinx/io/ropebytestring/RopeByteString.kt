@@ -57,7 +57,21 @@ class RopeByteString private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-        TODO("comparing a bytestring with another object is not implemented")
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as RopeByteString
+
+        if (other.size != size) return false
+        if (other.hashCode != 0 && hashCode != 0 && other.hashCode != hashCode) return false
+
+        for (i in 0..<size) {
+            if (other.getByteAt(i) != getByteAt(i)) {
+                return false
+            }
+        }
+
+        return true
     }
 
     override fun hashCode(): Int {
