@@ -10,6 +10,7 @@ fun main() {
         val s2 = ByteString(4, 5, 6)
 
         println("empty = ${empty.isEmpty()}")
+        println("empty = $empty")
         println("s1 = $s1")
         println("s2 = $s2")
 
@@ -31,6 +32,7 @@ fun main() {
         val s2 = RopeByteString(4, 5, 6)
 
         println("empty = ${empty.isEmpty()}")
+        println("empty = $empty")
         println("s1 = $s1")
         println("s2 = $s2")
     }

@@ -29,7 +29,19 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
     }
 
     override fun toString(): String {
-        TODO("converting a bytestring to a string is not implemented")
+        if (isEmpty()) {
+            return "RopeByteString(size=0)"
+        }
+        // format: "RopeByteString(size=XXX hex=YYYY)"
+        val sizeStr = size.toString()
+        val len = 26 + sizeStr.length + size * 2
+        return with(StringBuilder(len)) {
+            append("RopeByteString(size=")
+            append(sizeStr)
+            append(" hex=")
+            appendHexRepresentation(root)
+            append(')')
+        }.toString()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -44,6 +56,24 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
         TODO("comparing a bytestring with another bytestring is not implemented")
     }
 
+    private fun StringBuilder.appendHexRepresentation(node: TreeNode) {
+        with(node) {
+            when (this) {
+                is TreeNode.Leaf -> {
+                    for (byte in data) {
+                        val b = byte.toInt()
+                        append(HEX_DIGITS[(b ushr 4) and 0xf])
+                        append(HEX_DIGITS[b and 0xf])
+                    }
+                }
+                is TreeNode.Branch -> {
+                    appendHexRepresentation(left)
+                    appendHexRepresentation(right)
+                }
+            }
+        }
+    }
+
     private constructor(data: ByteArray, @Suppress("UNUSED_PARAMETER") dummy: Any?) :
             this(TreeNode.createLeaf(data))
 
@@ -51,6 +81,8 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
         internal val EMPTY: RopeByteString = RopeByteString(ByteArray(0), null)
 
         fun wrap(byteArray: ByteArray) = RopeByteString(byteArray, null)
+
+        private const val HEX_DIGITS = "0123456789abcdef"
     }
 }
 
