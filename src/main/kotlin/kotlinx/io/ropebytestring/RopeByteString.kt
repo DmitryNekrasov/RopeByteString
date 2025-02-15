@@ -44,7 +44,8 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
         TODO("comparing a bytestring with another bytestring is not implemented")
     }
 
-    private constructor(data: ByteArray, dummy: Any?) : this(TreeNode.createLeaf(data))
+    private constructor(data: ByteArray, @Suppress("UNUSED_PARAMETER") dummy: Any?) :
+            this(TreeNode.createLeaf(data))
 
     companion object {
         internal val EMPTY: RopeByteString = RopeByteString(ByteArray(0), null)

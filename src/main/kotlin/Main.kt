@@ -26,5 +26,7 @@ fun main() {
 
     run {
         val empty = RopeByteString()
+        val s1 = RopeByteString(1, 2, 3)
+        val s2 = RopeByteString(4, 5, 6)
     }
 }
