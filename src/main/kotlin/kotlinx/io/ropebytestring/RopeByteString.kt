@@ -1,10 +1,13 @@
 package kotlinx.io.ropebytestring
 
 public fun RopeByteString(vararg bytes: Byte): RopeByteString {
-    TODO("creating a bytestring from a vararg of bytes is not implemented")
+    return if (bytes.isEmpty()) RopeByteString.EMPTY else RopeByteString.wrap(bytes)
 }
 
-class RopeByteString : Comparable<RopeByteString> {
+class RopeByteString private constructor(private val root: TreeNode) : Comparable<RopeByteString> {
+
+    constructor(data: ByteArray, startIndex: Int = 0, endIndex: Int = data.size) :
+            this(data.copyOfRange(startIndex, endIndex), null)
 
     public val size: Int
         get(): Int = TODO("size getter is not implemented")
@@ -39,6 +42,14 @@ class RopeByteString : Comparable<RopeByteString> {
 
     override fun compareTo(other: RopeByteString): Int {
         TODO("comparing a bytestring with another bytestring is not implemented")
+    }
+
+    private constructor(data: ByteArray, dummy: Any?) : this(TreeNode.createLeaf(data))
+
+    companion object {
+        internal val EMPTY: RopeByteString = RopeByteString(ByteArray(0), null)
+
+        fun wrap(byteArray: ByteArray) = RopeByteString(byteArray, null)
     }
 }
 
