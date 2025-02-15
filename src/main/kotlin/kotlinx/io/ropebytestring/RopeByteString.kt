@@ -28,7 +28,6 @@ class RopeByteString private constructor(
         require(startIndex <= endIndex) { "invalid range: $startIndex > $endIndex" }
         require(startIndex >= 0) { "start index cannot be negative: $startIndex" }
         require(endIndex <= size) { "end index out of bounds: $endIndex" }
-
         return when {
             startIndex == endIndex -> EMPTY
             else -> RopeByteString(substring(root, startIndex, endIndex))
@@ -40,9 +39,10 @@ class RopeByteString private constructor(
         return getByteAt(index)
     }
 
-    public fun toByteArray(): ByteArray {
+    public fun toByteArray(startIndex: Int = 0, endIndex: Int = size): ByteArray {
+        require(startIndex <= endIndex) { "startIndex ($startIndex) > endIndex ($endIndex)" }
         val result = ByteArray(size)
-        for (i in 0..<size) {
+        for (i in startIndex..<endIndex) {
             result[i] = getByteAt(i)
         }
         return result
