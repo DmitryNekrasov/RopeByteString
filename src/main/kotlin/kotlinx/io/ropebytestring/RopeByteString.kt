@@ -4,7 +4,10 @@ public fun RopeByteString(vararg bytes: Byte): RopeByteString {
     return if (bytes.isEmpty()) RopeByteString.EMPTY else RopeByteString.wrap(bytes)
 }
 
-class RopeByteString private constructor(private val root: TreeNode) : Comparable<RopeByteString> {
+class RopeByteString private constructor(
+    private val root: TreeNode,
+    private val cache: RopeByteStringCache = LastChunkRopeByteStringCache()
+) : Comparable<RopeByteString> {
 
     constructor(data: ByteArray, startIndex: Int = 0, endIndex: Int = data.size) :
             this(data.copyOfRange(startIndex, endIndex), null)
@@ -85,9 +88,15 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
     }
 
     private fun getByteAt(index: Int): Byte {
+        if (index in cache) return cache[index]
+
         tailrec fun traverseToLeaf(node: TreeNode, idx: Int): Byte = with(node) {
             when (this) {
-                is TreeNode.Leaf -> data[idx]
+                is TreeNode.Leaf -> {
+                    cache.update(data, index, idx)
+                    data[idx]
+                }
+
                 is TreeNode.Branch -> if (idx < left.weight) traverseToLeaf(left, idx) else
                     traverseToLeaf(right, idx - left.weight)
             }
