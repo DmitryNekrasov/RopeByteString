@@ -1,3 +1,5 @@
+@file:Suppress("RedundantVisibilityModifier")
+
 package kotlinx.io.ropebytestring
 
 import kotlin.math.min
