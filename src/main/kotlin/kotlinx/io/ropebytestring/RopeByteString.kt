@@ -12,16 +12,16 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
     public val size: Int
         get(): Int = root.weight
 
-    public operator fun plus(other: RopeByteString): RopeByteString {
-        TODO("concatenation is not implemented")
-    }
+    public operator fun plus(other: RopeByteString): RopeByteString =
+        RopeByteString(TreeNode.createBranch(root, other.root))
 
     public fun substring(startIndex: Int, endIndex: Int = size): RopeByteString {
         TODO("substring extraction is not implemented")
     }
 
     public operator fun get(index: Int): Byte {
-        TODO("extract a byte by an index is not implemented")
+        require(index in 0..<size) { "index ($index) is out of rope byte string bounds: [0..$size)" }
+        return getByteAt(index)
     }
 
     public fun toByteArray(): ByteArray {
@@ -66,12 +66,25 @@ class RopeByteString private constructor(private val root: TreeNode) : Comparabl
                         append(HEX_DIGITS[b and 0xf])
                     }
                 }
+
                 is TreeNode.Branch -> {
                     appendHexRepresentation(left)
                     appendHexRepresentation(right)
                 }
             }
         }
+    }
+
+    private fun getByteAt(index: Int): Byte {
+        tailrec fun traverseToLeaf(node: TreeNode, idx: Int): Byte = with(node) {
+            when (this) {
+                is TreeNode.Leaf -> data[idx]
+                is TreeNode.Branch -> if (idx < left.weight) traverseToLeaf(left, idx) else
+                    traverseToLeaf(right, idx - left.weight)
+            }
+        }
+
+        return traverseToLeaf(root, index)
     }
 
     private constructor(data: ByteArray, @Suppress("UNUSED_PARAMETER") dummy: Any?) :

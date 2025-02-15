@@ -35,5 +35,15 @@ fun main() {
         println("empty = $empty")
         println("s1 = $s1")
         println("s2 = $s2")
+
+        val bytes = RopeByteString(15, 14, 13) + RopeByteString(12, 11) +
+                RopeByteString(10, 9, 8, 7) + RopeByteString(6, 5, 4) +
+                RopeByteString(3) + RopeByteString(2, 1)
+        println(bytes)
+        print("[")
+        for (i in 0..<(bytes.size - 1)) {
+            print("${bytes[i]}, ")
+        }
+        println("${bytes[bytes.size - 1]}]")
     }
 }
