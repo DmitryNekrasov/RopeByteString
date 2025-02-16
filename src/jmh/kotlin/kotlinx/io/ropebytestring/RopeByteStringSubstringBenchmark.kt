@@ -8,21 +8,23 @@ import kotlin.random.Random
 @State(Scope.Benchmark)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
-@Fork(value = 1, jvmArgsAppend = [
-    "-Xms2g",
-    "-Xmx2g",
-    "-XX:+UseG1GC"
-])
+@Fork(
+    value = 1, jvmArgsAppend = [
+        "-Xms2g",
+        "-Xmx2g",
+        "-XX:+ParallelGC"
+    ]
+)
 @Warmup(iterations = 3, time = 1)
 @Measurement(iterations = 2, time = 1)
 open class RopeByteStringSubstringBenchmark {
-    @Param("100", "10000")
+    @Param("100", "1000", "10000", "100000")
     private var stringSize: Int = 0
 
-    @Param("10", "5000")
+    @Param("10", "100", "1000", "5000")
     private var chunkSize: Int = 0
 
-    @Param("10", "75")
+    @Param("10", "25", "50", "75", "95")
     private var windowPercentage: Int = 0
 
     private lateinit var rope: RopeByteString
