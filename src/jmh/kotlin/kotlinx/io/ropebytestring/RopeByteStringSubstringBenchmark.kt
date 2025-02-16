@@ -8,7 +8,11 @@ import kotlin.random.Random
 @State(Scope.Benchmark)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
-@Fork(1)
+@Fork(value = 1, jvmArgsAppend = [
+    "-Xms2g",
+    "-Xmx2g",
+    "-XX:+UseG1GC"
+])
 @Warmup(iterations = 3, time = 1)
 @Measurement(iterations = 2, time = 1)
 open class RopeByteStringSubstringBenchmark {
@@ -34,6 +38,7 @@ open class RopeByteStringSubstringBenchmark {
     }
 
     @Benchmark
+    @Fork(jvmArgsAppend = ["-XX:+PrintGC"])
     fun slidingWindow(blackhole: Blackhole) {
         for (i in 0..<(rope.size - windowSize)) {
             val sub = rope.substring(i, i + windowSize)
