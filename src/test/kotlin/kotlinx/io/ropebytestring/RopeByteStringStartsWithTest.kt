@@ -6,7 +6,6 @@ import kotlin.test.assertFalse
 
 class RopeByteStringStartsWithTest {
 
-    // Tests for startsWith(ByteArray)
     @Test
     fun testStartsWith_byteArray_emptyPrefix() {
         val rope = RopeByteString(1, 2, 3)
@@ -30,7 +29,7 @@ class RopeByteStringStartsWithTest {
     @Test
     fun testStartsWith_byteArray_entireContent() {
         val bytes = byteArrayOf(1, 2, 3)
-        val rope = RopeByteString(*bytes)
+        val rope = RopeByteString(bytes)
         assertTrue(rope.startsWith(bytes))
     }
 
@@ -42,9 +41,8 @@ class RopeByteStringStartsWithTest {
 
     @Test
     fun testStartsWith_byteArray_largeRope() {
-        // Create rope larger than chunk size
         val largeData = ByteArray(RopeByteString.DEFAULT_CHUNK_SIZE + 100) { it.toByte() }
-        val rope = RopeByteString(*largeData)
+        val rope = RopeByteString(largeData)
         assertTrue(rope.startsWith(largeData.copyOf(500)))
         assertFalse(rope.startsWith(ByteArray(500) { (it + 1).toByte() }))
     }
@@ -52,8 +50,7 @@ class RopeByteStringStartsWithTest {
     @Test
     fun testStartsWith_byteArray_acrossChunks() {
         val data = ByteArray(RopeByteString.DEFAULT_CHUNK_SIZE + 10) { it.toByte() }
-        val rope = RopeByteString(*data)
-        // Test prefix that spans across chunks
+        val rope = RopeByteString(data)
         val prefix = data.copyOfRange(
             RopeByteString.DEFAULT_CHUNK_SIZE - 5,
             RopeByteString.DEFAULT_CHUNK_SIZE + 5
@@ -61,7 +58,6 @@ class RopeByteStringStartsWithTest {
         assertTrue(rope.startsWith(data.copyOf(prefix.size)))
     }
 
-    // Tests for startsWith(RopeByteString)
     @Test
     fun testStartsWith_ropeByteString_empty() {
         val rope = RopeByteString(1, 2, 3)
@@ -97,11 +93,11 @@ class RopeByteStringStartsWithTest {
     @Test
     fun testStartsWith_ropeByteString_largeRope() {
         val largeData = ByteArray(RopeByteString.DEFAULT_CHUNK_SIZE + 100) { it.toByte() }
-        val rope = RopeByteString(*largeData)
-        val prefix = RopeByteString(*largeData.copyOf(500))
+        val rope = RopeByteString(largeData)
+        val prefix = RopeByteString(largeData.copyOf(500))
         assertTrue(rope.startsWith(prefix))
 
-        val differentPrefix = RopeByteString(*ByteArray(500) { (it + 1).toByte() })
+        val differentPrefix = RopeByteString(ByteArray(500) { (it + 1).toByte() })
         assertFalse(rope.startsWith(differentPrefix))
     }
 
@@ -110,7 +106,6 @@ class RopeByteStringStartsWithTest {
         val data = ByteArray(RopeByteString.DEFAULT_CHUNK_SIZE + 10) { it.toByte() }
         val rope = RopeByteString(*data)
 
-        // Create prefix that spans across chunks
         val prefixData = data.copyOfRange(
             RopeByteString.DEFAULT_CHUNK_SIZE - 5,
             RopeByteString.DEFAULT_CHUNK_SIZE + 5
