@@ -13,7 +13,7 @@ import kotlin.random.Random
     value = 1, jvmArgsAppend = [
         "-Xms2g",
         "-Xmx2g",
-        "-XX:+ParallelGC"
+        "-XX:+UseG1GC"
     ]
 )
 @Warmup(iterations = 3, time = 1)
