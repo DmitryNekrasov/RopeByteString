@@ -21,12 +21,19 @@ open class RopeByteStringConcatenationBenchmark {
     @Param("10", "100", "1000")
     private var listSize: Int = 0
 
+    @Param("true", "false")
+    private var balance: Boolean = false
+
     private lateinit var ropes: List<RopeByteString>
 
     @Setup
     fun setup() {
         ropes = List(listSize) {
-            RopeByteString(data = ByteArray(stringSize) { Random.nextBytes(1).first() }, chunkSize = chunkSize)
+            RopeByteString(
+                data = ByteArray(stringSize) { Random.nextBytes(1).first() },
+                chunkSize = chunkSize,
+                maintainBalance = balance
+            )
         }
     }
 
