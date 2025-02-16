@@ -50,9 +50,9 @@ class RopeByteString private constructor(
 
     public fun toByteArray(startIndex: Int = 0, endIndex: Int = size): ByteArray {
         requireRange(startIndex, endIndex, size)
-        val result = ByteArray(size)
+        val result = ByteArray(endIndex - startIndex)
         for (i in startIndex..<endIndex) {
-            result[i] = getByteAt(i)
+            result[i - startIndex] = getByteAt(i)
         }
         return result
     }
