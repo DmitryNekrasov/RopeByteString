@@ -35,7 +35,7 @@ class RopeByteStringSizeTest {
     fun testSize_largerThanDefaultChunkSize() {
         val size = RopeByteString.DEFAULT_CHUNK_SIZE + 100
         val bytes = ByteArray(size) { it.toByte() }
-        val rope = RopeByteString(*bytes)
+        val rope = RopeByteString(bytes)
         assertEquals(size, rope.size)
     }
 
