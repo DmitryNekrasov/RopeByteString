@@ -1,8 +1,9 @@
 package kotlinx.io.ropebytestring
 
-import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class RopeByteStringSizeTest {
     @Test

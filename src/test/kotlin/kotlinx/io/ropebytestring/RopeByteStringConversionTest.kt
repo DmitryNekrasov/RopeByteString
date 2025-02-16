@@ -1,8 +1,10 @@
 package kotlinx.io.ropebytestring
 
-import org.junit.jupiter.api.Assertions.*
-
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertContentEquals
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class RopeByteStringConversionTest {
 
