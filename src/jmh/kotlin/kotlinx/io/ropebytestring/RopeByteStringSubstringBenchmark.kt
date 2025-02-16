@@ -9,10 +9,13 @@ import kotlin.random.Random
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @Fork(
-    value = 1, jvmArgsAppend = [
-        "-Xms2g",
-        "-Xmx2g",
-        "-XX:+UseG1GC"
+    value = 1,
+    jvmArgsAppend = [
+        "-Xms2G",
+        "-Xmx2G",
+        "-XX:+UseG1GC",
+        "-XX:+AlwaysPreTouch",
+        "-XX:+PreserveFramePointer"
     ]
 )
 @Warmup(iterations = 3, time = 1)
