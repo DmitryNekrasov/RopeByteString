@@ -30,12 +30,7 @@ kotlin {
 }
 
 jmh {
-    includes.add(".*Benchmark.*") // Pattern for benchmark class names
-    warmupIterations.set(2)
-    iterations.set(5)
-    fork.set(2)
-    timeUnit.set("ms")
-    benchmarkMode.add("all")
+    includes.add(".*Benchmark.*")
     failOnError.set(true)
     resultFormat.set("JSON")
     @Suppress("DEPRECATION")
