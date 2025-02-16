@@ -62,17 +62,14 @@ class RopeByteStringConversionTest {
     fun testToByteArray_invalidRanges() {
         val rope = RopeByteString(1, 2, 3)
 
-        // Start index > end index
         assertFailsWith<IllegalArgumentException> {
             rope.toByteArray(2, 1)
         }
 
-        // Negative start index
         assertFailsWith<IllegalArgumentException> {
             rope.toByteArray(-1, 2)
         }
 
-        // End index > size
         assertFailsWith<IllegalArgumentException> {
             rope.toByteArray(0, 4)
         }
@@ -97,7 +94,6 @@ class RopeByteStringConversionTest {
         assertContentEquals(byteArrayOf(2, 3, 4), result)
     }
 
-    // Tests for ByteArray.toRopeByteString()
     @Test
     fun testToRopeByteString_empty() {
         val array = ByteArray(0)
@@ -136,12 +132,10 @@ class RopeByteStringConversionTest {
     fun testToRopeByteString_invalidChunkSize() {
         val array = ByteArray(100) { it.toByte() }
 
-        // Negative chunk size should use default
         val rope1 = array.toRopeByteString(chunkSize = -1)
         assertEquals(100, rope1.size)
         assertContentEquals(array, rope1.toByteArray())
 
-        // Chunk size larger than max should use default
         val rope2 = array.toRopeByteString(chunkSize = RopeByteString.MAX_CHUNK_SIZE + 1)
         assertEquals(100, rope2.size)
         assertContentEquals(array, rope2.toByteArray())
