@@ -19,8 +19,8 @@ import kotlin.random.Random
         "-XX:+PreserveFramePointer"
     ]
 )
-@Warmup(iterations = 20, time = 1)
-@Measurement(iterations = 10, time = 1)
+@Warmup(iterations = 10, time = 1)
+@Measurement(iterations = 5, time = 1)
 open class ByteStringSubstringBenchmark {
     @Param("100", "1000", "10000", "100000")
     private var stringSize: Int = 0
