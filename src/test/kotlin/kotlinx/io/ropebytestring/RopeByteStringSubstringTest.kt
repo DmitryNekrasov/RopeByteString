@@ -81,21 +81,10 @@ class RopeByteStringSubstringTest {
     fun testSubstring_invalidRanges() {
         val rope = RopeByteString(1, 2, 3, 4, 5)
 
-        assertFailsWith<IllegalArgumentException> {
-            rope.substring(3, 2)
-        }
-
-        assertFailsWith<IllegalArgumentException> {
-            rope.substring(-1, 3)
-        }
-
-        assertFailsWith<IllegalArgumentException> {
-            rope.substring(0, 6)
-        }
-
-        assertFailsWith<IllegalArgumentException> {
-            rope.substring(6, 7)
-        }
+        assertFailsWith<IllegalArgumentException> { rope.substring(3, 2) }
+        assertFailsWith<IllegalArgumentException> { rope.substring(-1, 3) }
+        assertFailsWith<IllegalArgumentException> { rope.substring(0, 6) }
+        assertFailsWith<IllegalArgumentException> { rope.substring(6, 7) }
     }
 
     @Test

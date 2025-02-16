@@ -24,17 +24,9 @@ class RopeByteStringIndexAccessTest {
     fun testGet_invalidIndices() {
         val rope = RopeByteString(1, 2, 3)
 
-        assertFailsWith<IllegalArgumentException> {
-            rope[-1]
-        }
-
-        assertFailsWith<IllegalArgumentException> {
-            rope[3]
-        }
-
-        assertFailsWith<IllegalArgumentException> {
-            rope[4]
-        }
+        assertFailsWith<IllegalArgumentException> { rope[-1] }
+        assertFailsWith<IllegalArgumentException> { rope[3] }
+        assertFailsWith<IllegalArgumentException> { rope[4] }
     }
 
     @Test

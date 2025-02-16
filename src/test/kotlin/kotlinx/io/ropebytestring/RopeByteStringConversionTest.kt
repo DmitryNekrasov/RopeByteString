@@ -64,17 +64,9 @@ class RopeByteStringConversionTest {
     fun testToByteArray_invalidRanges() {
         val rope = RopeByteString(1, 2, 3)
 
-        assertFailsWith<IllegalArgumentException> {
-            rope.toByteArray(2, 1)
-        }
-
-        assertFailsWith<IllegalArgumentException> {
-            rope.toByteArray(-1, 2)
-        }
-
-        assertFailsWith<IllegalArgumentException> {
-            rope.toByteArray(0, 4)
-        }
+        assertFailsWith<IllegalArgumentException> { rope.toByteArray(2, 1) }
+        assertFailsWith<IllegalArgumentException> { rope.toByteArray(-1, 2) }
+        assertFailsWith<IllegalArgumentException> { rope.toByteArray(0, 4) }
     }
 
     @Test
