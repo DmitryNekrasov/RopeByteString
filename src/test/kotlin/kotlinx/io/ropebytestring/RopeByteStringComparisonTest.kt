@@ -196,7 +196,7 @@ class RopeByteStringComparisonTest {
 
         val sorted = ropes.sorted()
         assertEquals(5, sorted.size)
-        for (i in 0 until sorted.size - 1) {
+        for (i in 0..<sorted.lastIndex) {
             assertTrue(sorted[i] < sorted[i + 1])
         }
     }

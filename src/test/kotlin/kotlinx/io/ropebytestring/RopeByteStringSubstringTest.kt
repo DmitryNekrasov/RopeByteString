@@ -53,7 +53,7 @@ class RopeByteStringSubstringTest {
         val substring = rope.substring(start, end)
 
         assertEquals(100, substring.size)
-        for (i in 0 until 100) {
+        for (i in 0..<100) {
             assertEquals(data[start + i], substring[i])
         }
     }
@@ -64,7 +64,7 @@ class RopeByteStringSubstringTest {
         val rope = RopeByteString(data = data, chunkSize = 20)
         val substring = rope.substring(15, 85)
         assertEquals(70, substring.size)
-        for (i in 0 until 70) {
+        for (i in 0..<70) {
             assertEquals(data[i + 15], substring[i])
         }
     }
@@ -109,7 +109,7 @@ class RopeByteStringSubstringTest {
         val substring = rope.substring(start, end)
 
         assertEquals(200, substring.size)
-        for (i in 0 until 200) {
+        for (i in 0..<200) {
             assertEquals(data[start + i], substring[i])
         }
     }
