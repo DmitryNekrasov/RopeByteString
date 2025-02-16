@@ -8,26 +8,28 @@ public fun RopeByteString(vararg bytes: Byte): RopeByteString {
     return if (bytes.isEmpty()) RopeByteString.EMPTY else RopeByteString.wrap(bytes)
 }
 
+public fun RopeByteString(
+    data: ByteArray,
+    startIndex: Int = 0,
+    endIndex: Int = data.size,
+    chunkSize: Int = RopeByteString.DEFAULT_CHUNK_SIZE
+): RopeByteString {
+    return if (data.isEmpty()) RopeByteString.EMPTY else RopeByteString.wrap(
+        RopeByteString.merge(
+            RopeByteString.splitIntoChunks(
+                data,
+                startIndex,
+                endIndex,
+                if (chunkSize in 1..RopeByteString.MAX_CHUNK_SIZE) chunkSize else RopeByteString.DEFAULT_CHUNK_SIZE
+            )
+        )
+    )
+}
+
 class RopeByteString private constructor(
     private val root: TreeNode,
     private val cache: RopeByteStringCache = LastChunkRopeByteStringCache()
 ) : Comparable<RopeByteString> {
-
-    constructor(
-        data: ByteArray,
-        startIndex: Int = 0,
-        endIndex: Int = data.size,
-        chunkSize: Int = DEFAULT_CHUNK_SIZE
-    ) : this(
-        merge(
-            splitIntoChunks(
-                data,
-                startIndex,
-                endIndex,
-                if (chunkSize in 1..MAX_CHUNK_SIZE) chunkSize else DEFAULT_CHUNK_SIZE
-            )
-        )
-    )
 
     public val size: Int
         get(): Int = root.weight
@@ -235,6 +237,8 @@ class RopeByteString private constructor(
         internal fun wrap(byteArray: ByteArray) =
             if (byteArray.size <= DEFAULT_CHUNK_SIZE) RopeByteString(byteArray, null) else RopeByteString(byteArray)
 
+        internal fun wrap(node: TreeNode) = RopeByteString(node)
+
         internal const val DEFAULT_CHUNK_SIZE = 1024
 
         internal const val MAX_CHUNK_SIZE = 8192
@@ -247,7 +251,7 @@ class RopeByteString private constructor(
             require(endIndex <= upperBound) { "end index out of bounds: $endIndex" }
         }
 
-        private fun splitIntoChunks(
+        internal fun splitIntoChunks(
             data: ByteArray,
             startIndex: Int,
             endIndex: Int,
@@ -259,7 +263,7 @@ class RopeByteString private constructor(
             }
         }
 
-        private fun merge(nodes: List<TreeNode>, start: Int = 0, end: Int = nodes.size): TreeNode {
+        internal fun merge(nodes: List<TreeNode>, start: Int = 0, end: Int = nodes.size): TreeNode {
             val range = end - start
             if (range == 1) return nodes[start]
             val mid = start + range / 2
