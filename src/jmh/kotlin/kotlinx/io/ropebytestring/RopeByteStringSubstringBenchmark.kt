@@ -24,7 +24,7 @@ open class RopeByteStringSubstringBenchmark {
     @Param("100", "1000", "10000", "100000")
     private var stringSize: Int = 0
 
-    @Param("10", "100", "1000", "5000")
+    @Param("16", "128", "1024", "4096", "8192")
     private var chunkSize: Int = 0
 
     @Param("10", "25", "50", "75", "95")
