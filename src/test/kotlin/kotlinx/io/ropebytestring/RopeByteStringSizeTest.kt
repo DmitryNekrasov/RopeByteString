@@ -6,6 +6,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class RopeByteStringSizeTest {
+
     @Test
     fun testSize_emptyString() {
         val rope = RopeByteString()

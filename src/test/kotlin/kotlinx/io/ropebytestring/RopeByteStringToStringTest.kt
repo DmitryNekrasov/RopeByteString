@@ -4,6 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class RopeByteStringToStringTest {
+
     @Test
     fun testToString_emptyString() {
         val rope = RopeByteString()
