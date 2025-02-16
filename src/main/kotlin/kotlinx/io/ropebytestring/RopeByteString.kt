@@ -84,6 +84,8 @@ class RopeByteString private constructor(
         else -> rangeEquals(size - ropeByteString.size, ropeByteString)
     }
 
+    public fun rebalance(): RopeByteString = RopeByteString(merge(collectAllLeaves()))
+
     override fun toString(): String {
         if (isEmpty()) {
             return "RopeByteString(size=0)"
@@ -228,8 +230,6 @@ class RopeByteString private constructor(
 
         return leaves
     }
-
-    private fun rebalance(): RopeByteString = RopeByteString(merge(collectAllLeaves()))
 
     private constructor(data: ByteArray, @Suppress("UNUSED_PARAMETER") dummy: Any?) :
             this(TreeNode.createLeaf(data))
