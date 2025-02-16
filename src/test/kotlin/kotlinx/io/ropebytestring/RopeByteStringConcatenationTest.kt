@@ -52,18 +52,16 @@ class RopeByteStringConcatenationTest {
 
     @Test
     fun testConcatenation_withChunks() {
-        // Create strings just smaller than chunk size
         val chunkSize = RopeByteString.DEFAULT_CHUNK_SIZE
         val data1 = ByteArray(chunkSize - 10) { it.toByte() }
         val data2 = ByteArray(chunkSize - 10) { (it + chunkSize).toByte() }
 
-        val rope1 = RopeByteString(*data1)
-        val rope2 = RopeByteString(*data2)
+        val rope1 = RopeByteString(data1)
+        val rope2 = RopeByteString(data2)
         val result = rope1 + rope2
 
         assertEquals(data1.size + data2.size, result.size)
 
-        // Verify content
         for (i in data1.indices) {
             assertEquals(data1[i], result[i])
         }
@@ -74,18 +72,16 @@ class RopeByteStringConcatenationTest {
 
     @Test
     fun testConcatenation_largeStrings() {
-        // Create strings larger than chunk size
         val size = RopeByteString.DEFAULT_CHUNK_SIZE + 100
         val data1 = ByteArray(size) { it.toByte() }
         val data2 = ByteArray(size) { (it + size).toByte() }
 
-        val rope1 = RopeByteString(*data1)
-        val rope2 = RopeByteString(*data2)
+        val rope1 = RopeByteString(data1)
+        val rope2 = RopeByteString(data2)
         val result = rope1 + rope2
 
         assertEquals(size * 2, result.size)
 
-        // Verify content
         for (i in data1.indices) {
             assertEquals(data1[i], result[i])
         }
@@ -105,7 +101,6 @@ class RopeByteStringConcatenationTest {
 
         assertEquals(200, result.size)
 
-        // Verify content
         for (i in data1.indices) {
             assertEquals(data1[i], result[i])
         }
@@ -119,8 +114,8 @@ class RopeByteStringConcatenationTest {
         val original1 = RopeByteString(1, 2, 3, 4, 5)
         val original2 = RopeByteString(6, 7, 8, 9, 10)
 
-        val sub1 = original1.substring(1, 4)  // [2,3,4]
-        val sub2 = original2.substring(1, 4)  // [7,8,9]
+        val sub1 = original1.substring(1, 4)  // [2, 3, 4]
+        val sub2 = original2.substring(1, 4)  // [7, 8, 9]
 
         val result = sub1 + sub2
         assertEquals(6, result.size)
@@ -138,20 +133,16 @@ class RopeByteStringConcatenationTest {
         val result = rope1 + rope2
 
         assertEquals(maxChunkSize * 2, result.size)
-
-        // Verify content at boundaries
         assertEquals(data1[maxChunkSize - 1], result[maxChunkSize - 1])
         assertEquals(data2[0], result[maxChunkSize])
     }
 
     @Test
     fun testConcatenation_complexScenario() {
-        // Create several ropes with different sizes and chunk configurations
         val rope1 = RopeByteString(1, 2, 3)
         val rope2 = RopeByteString(data = ByteArray(1000) { 4 }, chunkSize = 100)
-        val rope3 = RopeByteString(5, 6, 7).substring(1, 3)  // [6,7]
+        val rope3 = RopeByteString(5, 6, 7).substring(1, 3)  // [6, 7]
 
-        // Perform multiple concatenations
         val result = rope1 + rope2 + rope3
 
         assertEquals(1005, result.size)
@@ -164,13 +155,11 @@ class RopeByteStringConcatenationTest {
         var result = RopeByteString(1)
         val expectedSize = 10
 
-        // Concatenate single-byte strings in a cycle
         for (i in 2..expectedSize) {
             result += RopeByteString(i.toByte())
         }
 
         assertEquals(expectedSize, result.size)
-        // Verify each byte
         for (i in 1..expectedSize) {
             assertEquals(i.toByte(), result[i - 1])
         }
@@ -181,13 +170,11 @@ class RopeByteStringConcatenationTest {
         var result = RopeByteString()
         val iterations = 5
 
-        // Each iteration adds more bytes than the previous one
         for (i in 1..iterations) {
             val newData = ByteArray(i * 100) { it.toByte() }
             result += RopeByteString(*newData)
         }
 
-        // Calculate expected size: sum of arithmetic progression (100 + 200 + 300 + 400 + 500)
         val expectedSize = (iterations * (iterations + 1) / 2) * 100
         assertEquals(expectedSize, result.size)
     }
@@ -197,7 +184,6 @@ class RopeByteStringConcatenationTest {
         val chunkSize = RopeByteString.DEFAULT_CHUNK_SIZE
         var result = RopeByteString()
 
-        // Add chunks that are just smaller than chunk size
         val iterationCount = 5
         val singleSize = chunkSize - 10
 
@@ -208,7 +194,6 @@ class RopeByteStringConcatenationTest {
 
         assertEquals(singleSize * iterationCount, result.size)
 
-        // Verify content at chunk boundaries
         for (i in 0 until iterationCount) {
             val index = (i * singleSize) + (singleSize - 1)
             if (index < result.size) {
@@ -223,12 +208,10 @@ class RopeByteStringConcatenationTest {
         val iterations = 5
 
         for (i in 0 until iterations) {
-            // Add small string (3 bytes)
             result += RopeByteString(i.toByte(), (i + 1).toByte(), (i + 2).toByte())
 
-            // Add large string (1000 bytes)
             val largeData = ByteArray(1000) { (it + i).toByte() }
-            result += RopeByteString(*largeData)
+            result += RopeByteString(largeData)
         }
 
         val expectedSize = iterations * (3 + 1000)
@@ -248,7 +231,6 @@ class RopeByteStringConcatenationTest {
 
         assertEquals(singleSize * iterations, result.size)
 
-        // Verify content at the start of each iteration
         for (i in 0 until iterations) {
             val index = i * singleSize
             assertEquals(i.toByte(), result[index])
@@ -261,18 +243,14 @@ class RopeByteStringConcatenationTest {
         val iterations = 5
 
         for (i in 0 until iterations) {
-            // Add a small string
             result += RopeByteString(4, 5)
 
-            // Take a substring
             result = result.substring(1, result.size)
 
-            // Add a medium string
             val mediumData = ByteArray(100) { it.toByte() }
             result += RopeByteString(*mediumData)
         }
 
-        // Verify the size progression
         val expectedFinalSize = 508
         assertEquals(expectedFinalSize, result.size)
     }
@@ -282,12 +260,10 @@ class RopeByteStringConcatenationTest {
         var result = RopeByteString(1, 2, 3)
         val iterations = 100
 
-        // Add empty strings in a cycle
         for (i in 0 until iterations) {
             result += RopeByteString()
         }
 
-        // Size should remain unchanged
         assertEquals(3, result.size)
         assertEquals("RopeByteString(size=3 hex=010203)", result.toString())
     }
@@ -298,7 +274,6 @@ class RopeByteStringConcatenationTest {
         val pattern = RopeByteString(1, 2, 3)
         val iterations = 5
 
-        // Each iteration concatenates one more copy of the pattern
         for (i in 1..iterations) {
             var iterationResult = pattern
             for (j in 1 until i) {
@@ -307,7 +282,6 @@ class RopeByteStringConcatenationTest {
             result += iterationResult
         }
 
-        // Calculate expected size: sum of arithmetic progression of pattern.size
         val expectedSize = pattern.size * (iterations * (iterations + 1) / 2)
         assertEquals(expectedSize, result.size)
     }
@@ -325,7 +299,6 @@ class RopeByteStringConcatenationTest {
 
         assertEquals(chunkSize * iterations, result.size)
 
-        // Verify content at max chunk boundaries
         for (i in 0 until iterations) {
             val boundaryIndex = chunkSize * i
             assertEquals((i).toByte(), result[boundaryIndex])
