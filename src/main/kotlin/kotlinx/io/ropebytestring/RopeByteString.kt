@@ -278,7 +278,7 @@ class RopeByteString private constructor(
             if (!maintainBalance || isBalanced())
                 RopeByteString(this, maintainBalance)
             else
-                RopeByteString(this, maintainBalance).rebalance()
+                RopeByteString(this, true).rebalance()
     }
 }
 
