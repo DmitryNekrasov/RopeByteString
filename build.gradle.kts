@@ -29,6 +29,7 @@ kotlin {
 }
 
 jmh {
+    profilers.set(listOf("gc"))
     includes.add(".*Benchmark.*")
     failOnError.set(true)
     resultFormat.set("JSON")
