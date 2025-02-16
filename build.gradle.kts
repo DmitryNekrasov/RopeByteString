@@ -38,5 +38,6 @@ jmh {
     benchmarkMode.add("all")
     failOnError.set(true)
     resultFormat.set("JSON")
+    @Suppress("DEPRECATION")
     resultsFile.set(project.file("${project.buildDir}/reports/jmh/results.json"))
 }
