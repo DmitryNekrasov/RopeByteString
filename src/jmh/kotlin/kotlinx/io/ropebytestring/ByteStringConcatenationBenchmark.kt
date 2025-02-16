@@ -10,13 +10,13 @@ import kotlin.random.Random
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @Fork(1)
-@Warmup(iterations = 3, time = 1)
+@Warmup(iterations = 10, time = 1)
 @Measurement(iterations = 5, time = 1)
 open class ByteStringConcatenationBenchmark {
     @Param("100", "1000", "10000")
     private var stringSize: Int = 0
 
-    @Param("10")
+    @Param("10", "100", "1000")
     private var listSize: Int = 0
 
     private lateinit var strings: List<ByteString>
