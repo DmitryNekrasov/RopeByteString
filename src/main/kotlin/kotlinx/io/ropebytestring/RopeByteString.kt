@@ -12,36 +12,39 @@ public fun RopeByteString(
     data: ByteArray,
     startIndex: Int = 0,
     endIndex: Int = data.size,
-    chunkSize: Int = RopeByteString.DEFAULT_CHUNK_SIZE
+    chunkSize: Int = RopeByteString.DEFAULT_CHUNK_SIZE,
+    maintainBalance: Boolean = false
 ): RopeByteString {
     return if (data.isEmpty()) RopeByteString.EMPTY else RopeByteString.wrap(
-        RopeByteString.merge(
+        node = RopeByteString.merge(
             RopeByteString.splitIntoChunks(
                 data,
                 startIndex,
                 endIndex,
                 if (chunkSize in 1..RopeByteString.MAX_CHUNK_SIZE) chunkSize else RopeByteString.DEFAULT_CHUNK_SIZE
             )
-        )
+        ),
+        maintainBalance = maintainBalance
     )
 }
 
 class RopeByteString private constructor(
     private val root: TreeNode,
-    private val cache: RopeByteStringCache = LastChunkRopeByteStringCache()
+    private val maintainBalance: Boolean = false,
+    private val cache: RopeByteStringCache = LastChunkRopeByteStringCache(),
 ) : Comparable<RopeByteString> {
 
     public val size: Int
         get(): Int = root.weight
 
     public operator fun plus(other: RopeByteString): RopeByteString =
-        TreeNode.createBranch(root, other.root).toRopeByteString()
+        TreeNode.createBranch(root, other.root).toRopeByteString(maintainBalance || other.maintainBalance)
 
     public fun substring(startIndex: Int, endIndex: Int = size): RopeByteString {
         requireRange(startIndex, endIndex, size)
         return when {
             startIndex == endIndex -> EMPTY
-            else -> substring(root, startIndex, endIndex).toRopeByteString()
+            else -> substring(root, startIndex, endIndex).toRopeByteString(maintainBalance)
         }
     }
 
@@ -237,7 +240,8 @@ class RopeByteString private constructor(
         internal fun wrap(byteArray: ByteArray) =
             if (byteArray.size <= DEFAULT_CHUNK_SIZE) RopeByteString(byteArray, null) else RopeByteString(byteArray)
 
-        internal fun wrap(node: TreeNode) = RopeByteString(node)
+        internal fun wrap(node: TreeNode, maintainBalance: Boolean) =
+            RopeByteString(node, maintainBalance)
 
         internal const val DEFAULT_CHUNK_SIZE = 1024
 
@@ -270,8 +274,11 @@ class RopeByteString private constructor(
             return TreeNode.createBranch(merge(nodes, start, mid), merge(nodes, mid, end))
         }
 
-        private fun TreeNode.toRopeByteString(): RopeByteString =
-            if (isBalanced()) RopeByteString(this) else RopeByteString(this).rebalance()
+        private fun TreeNode.toRopeByteString(maintainBalance: Boolean): RopeByteString =
+            if (!maintainBalance || isBalanced())
+                RopeByteString(this, maintainBalance)
+            else
+                RopeByteString(this, maintainBalance).rebalance()
     }
 }
 
