@@ -85,4 +85,60 @@ class RopeByteStringSizeTest {
         val rope = RopeByteString(data = bytes, startIndex = 20, endIndex = 80)
         assertEquals(60, rope.size)
     }
+
+    @Test
+    fun testIsEmpty_newInstance() {
+        val rope = RopeByteString()
+        assertTrue(rope.isEmpty())
+        assertFalse(rope.isNotEmpty())
+    }
+
+    @Test
+    fun testIsEmpty_nonEmptyInstance() {
+        val rope = RopeByteString(1)
+        assertFalse(rope.isEmpty())
+        assertTrue(rope.isNotEmpty())
+    }
+
+    @Test
+    fun testIsEmpty_afterClear() {
+        val rope = RopeByteString().substring(0, 0)
+        assertTrue(rope.isEmpty())
+        assertFalse(rope.isNotEmpty())
+    }
+
+    @Test
+    fun testIsEmpty_concatenation() {
+        val empty1 = RopeByteString()
+        val empty2 = RopeByteString()
+        val concatenated = empty1 + empty2
+
+        assertTrue(concatenated.isEmpty())
+        assertFalse(concatenated.isNotEmpty())
+    }
+
+    @Test
+    fun testIsEmpty_emptySubstring() {
+        val rope = RopeByteString(1, 2, 3)
+        val emptySubstring = rope.substring(1, 1)
+
+        assertTrue(emptySubstring.isEmpty())
+        assertFalse(emptySubstring.isNotEmpty())
+    }
+
+    @Test
+    fun testIsEmpty_consistencyWithSize() {
+        val ropes = listOf(
+            RopeByteString(),
+            RopeByteString(1),
+            RopeByteString(1, 2, 3),
+            RopeByteString().substring(0, 0),
+            RopeByteString(1, 2, 3).substring(1, 1)
+        )
+
+        for (rope in ropes) {
+            assertEquals(rope.size == 0, rope.isEmpty())
+            assertEquals(rope.size != 0, rope.isNotEmpty())
+        }
+    }
 }
