@@ -43,7 +43,6 @@ open class RopeByteStringSubstringBenchmark {
     }
 
     @Benchmark
-    @Fork(jvmArgsAppend = ["-XX:+PrintGC"])
     fun slidingWindow(blackhole: Blackhole) {
         for (i in 0..<(rope.size - windowSize)) {
             val sub = rope.substring(i, i + windowSize)

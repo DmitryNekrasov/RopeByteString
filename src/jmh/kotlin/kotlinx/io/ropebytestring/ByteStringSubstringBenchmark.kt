@@ -39,7 +39,6 @@ open class ByteStringSubstringBenchmark {
 
 
     @Benchmark
-    @Fork(jvmArgsAppend = ["-XX:+PrintGC"])
     fun slidingWindow(blackhole: Blackhole) {
         for (i in 0..<(str.size - windowSize)) {
             val sub = str.substring(i, i + windowSize)
