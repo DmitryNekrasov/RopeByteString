@@ -180,17 +180,11 @@ class RopeByteString private constructor(
         return traverseToLeaf(root, index)
     }
 
-    private fun substring(node: TreeNode, startIndex: Int, endIndex: Int): TreeNode =
-        with(node) {
+    private fun substring(node: TreeNode, startIndex: Int, endIndex: Int): TreeNode {
+        if (node.weight == endIndex - startIndex) return node
+        return with(node) {
             when (this) {
-                is TreeNode.Leaf -> {
-                    if (startIndex == 0 && endIndex == data.size) {
-                        this
-                    } else {
-                        TreeNode.createLeaf(data.copyOfRange(startIndex, endIndex))
-                    }
-                }
-
+                is TreeNode.Leaf -> TreeNode.createLeaf(data.copyOfRange(startIndex, endIndex))
                 is TreeNode.Branch -> when {
                     endIndex <= left.weight -> substring(left, startIndex, endIndex)
                     startIndex >= left.weight -> substring(right, startIndex - left.weight, endIndex - left.weight)
@@ -201,6 +195,7 @@ class RopeByteString private constructor(
                 }
             }
         }
+    }
 
     private fun rangeEquals(offset: Int, byteArray: ByteArray): Boolean {
         for (i in byteArray.indices) {
