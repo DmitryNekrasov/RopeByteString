@@ -173,6 +173,14 @@ class RopeByteString private constructor(
         else -> rangeEquals(size - ropeByteString.size, ropeByteString)
     }
 
+    /**
+     * Creates a new balanced rope byte string containing the same sequence of bytes as this rope byte string.
+     *
+     * The rebalancing process collects all leaf nodes and merges them into a new balanced tree structure.
+     * A balanced tree structure ensures more uniform access times across the byte string.
+     *
+     * @return a new rope byte string with a balanced tree structure containing the same bytes as this rope byte string.
+     */
     public fun rebalance(): RopeByteString = RopeByteString(merge(collectAllLeaves()))
 
     /**
