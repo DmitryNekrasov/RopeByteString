@@ -58,6 +58,9 @@ class RopeByteString private constructor(
      *
      * @throws IllegalArgumentException when `startIndex > endIndex`.
      * @throws IndexOutOfBoundsException when [startIndex] or [endIndex] is out of range of rope byte string indices.
+     *
+     * @return a new rope byte string containing the bytes from [startIndex] (inclusive) to [endIndex] (exclusive).
+     *         Returns an empty rope byte string if [startIndex] equals [endIndex].
      */
     public fun substring(startIndex: Int, endIndex: Int = size): RopeByteString {
         requireRange(startIndex, endIndex, size)
