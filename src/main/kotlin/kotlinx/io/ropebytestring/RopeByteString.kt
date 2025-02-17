@@ -4,10 +4,38 @@ package kotlinx.io.ropebytestring
 
 import kotlin.math.min
 
+/**
+ * Creates a rope byte string from the specified byte values.
+ *
+ * @param bytes the bytes to store in the rope byte string.
+ *              Can be provided as individual byte values or as a spread array using the spread (*) operator.
+ *
+ * @return a new rope byte string containing the specified bytes.
+ *         If no bytes are provided, returns an empty rope byte string.
+ */
 public fun RopeByteString(vararg bytes: Byte): RopeByteString {
     return if (bytes.isEmpty()) RopeByteString.EMPTY else RopeByteString.wrap(bytes)
 }
 
+/**
+ * Creates a rope byte string from a specified range of bytes in the byte array.
+ *
+ * @param data the source byte array to create the rope byte string from.
+ * @param startIndex the start index (inclusive) in the byte array, defaults to 0.
+ * @param endIndex the end index (exclusive) in the byte array, defaults to [data.size].
+ * @param chunkSize the maximum size of chunks in the resulting rope byte string.
+ *                  Must be in range 1..[RopeByteString.MAX_CHUNK_SIZE],
+ *                  defaults to [RopeByteString.DEFAULT_CHUNK_SIZE].
+ *                  If specified value is outside this range, [RopeByteString.DEFAULT_CHUNK_SIZE] is used.
+ * @param maintainBalance whether to maintain balance in the rope tree structure,
+ *                        affects performance of operations, defaults to false.
+ *
+ * @return a new rope byte string containing the bytes from the specified range of the input array.
+ *         If the input array is empty, returns an empty rope byte string.
+ *
+ * @throws IllegalArgumentException if [startIndex] is greater than [endIndex].
+ * @throws IndexOutOfBoundsException if [startIndex] is negative or [endIndex] is greater than [data.size].
+ */
 public fun RopeByteString(
     data: ByteArray,
     startIndex: Int = 0,
