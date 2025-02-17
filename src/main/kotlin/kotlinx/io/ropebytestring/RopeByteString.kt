@@ -67,6 +67,13 @@ class RopeByteString private constructor(
         else -> rangeEquals(0, byteArray)
     }
 
+    /**
+     * Returns true if this rope byte string starts with the prefix specified by the [ropeByteString].
+     *
+     * Behavior of this method is compatible with [CharSequence.startsWith].
+     *
+     * @param ropeByteString the prefix to check for.
+     */
     public fun startsWith(ropeByteString: RopeByteString): Boolean = when {
         ropeByteString.size > size -> false
         ropeByteString.size == size -> equals(ropeByteString)
