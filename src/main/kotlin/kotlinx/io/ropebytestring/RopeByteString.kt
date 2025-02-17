@@ -102,6 +102,11 @@ class RopeByteString private constructor(
         }.toString()
     }
 
+    /**
+     * Returns `true` if [other] is a rope byte string containing exactly the same byte sequence.
+     *
+     * @param other the other object to compare this rope byte string for equality to.
+     */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || this::class != other::class) return false
