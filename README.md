@@ -30,6 +30,13 @@ For a 100KB string with 50% window:
 - RopeByteString: ~9ms
 - Memory allocation reduced from ~2.5GB to ~69MB per operation
 
+You can find the full performance report in the following documents:
+- [Concatenation operations](performance-analysis-concatenation.md)
+- [Substring operations](performance-analysis-substring.md)
+- [Index access operations](performance-analysis-index-access.md)
+
+Also in the [Releases](https://github.com/DmitryNekrasov/RopeByteString/releases) tab next to the latest release you can find all the logs from benchmark runs.
+
 ## Usage
 
 ```kotlin
