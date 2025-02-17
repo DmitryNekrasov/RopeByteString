@@ -415,6 +415,9 @@ class RopeByteString private constructor(
 public fun ByteArray.toRopeByteString(chunkSize: Int = RopeByteString.DEFAULT_CHUNK_SIZE): RopeByteString =
     RopeByteString(data = this, chunkSize = chunkSize)
 
+/**
+ * @return the range of valid byte indices for this rope byte string.
+ */
 public val RopeByteString.indices: IntRange
     get() = 0..<size
 
