@@ -193,6 +193,9 @@ class RopeByteString private constructor(
      * Note that a string representation includes the whole rope byte string content encoded.
      * Due to limitations exposed for the maximum string length, an attempt to return a string representation
      * of too long rope byte string may fail.
+     *
+     * @return a string in the format `RopeByteString(size=N hex=<hexadecimal>)` where N is the size and
+     *         <hexadecimal> is the hex representation of all bytes, or `RopeByteString(size=0)` for empty strings.
      */
     override fun toString(): String {
         if (isEmpty()) {
