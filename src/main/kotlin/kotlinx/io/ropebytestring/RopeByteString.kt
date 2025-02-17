@@ -449,6 +449,7 @@ class RopeByteString private constructor(
  * @param chunkSize the maximum size of chunks in the resulting rope byte string.
  *                  Must be in range 1..[RopeByteString.MAX_CHUNK_SIZE],
  *                  defaults to [RopeByteString.DEFAULT_CHUNK_SIZE].
+ *
  * @return a new rope byte string containing all bytes from this byte array.
  *         If this byte array is empty, returns an empty rope byte string.
  */
