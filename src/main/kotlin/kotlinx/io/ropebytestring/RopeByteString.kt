@@ -147,6 +147,9 @@ class RopeByteString private constructor(
      * Behavior of this method is compatible with [CharSequence.endsWith].
      *
      * @param byteArray the suffix to check for.
+     *
+     * @return `true` if this rope byte string ends with all the bytes in [byteArray] in the same order,
+     *         `false` if either the [byteArray] is longer than this rope byte string or if any bytes differ.
      */
     public fun endsWith(byteArray: ByteArray): Boolean = when {
         byteArray.size > size -> false
@@ -159,6 +162,10 @@ class RopeByteString private constructor(
      * Behavior of this method is compatible with [CharSequence.endsWith].
      *
      * @param ropeByteString the suffix to check for.
+     *
+     * @return `true` if this rope byte string ends with all the bytes in [ropeByteString] in the same order,
+     *         `false` if either the [ropeByteString] is longer than this rope byte string or if any bytes differ.
+     *         Returns `true` if both strings are equal.
      */
     public fun endsWith(ropeByteString: RopeByteString): Boolean = when {
         ropeByteString.size > size -> false
