@@ -418,6 +418,12 @@ public fun ByteArray.toRopeByteString(chunkSize: Int = RopeByteString.DEFAULT_CH
 public val RopeByteString.indices: IntRange
     get() = 0..<size
 
+/**
+ * @return `true` if this rope byte string is empty.
+ */
 public fun RopeByteString.isEmpty(): Boolean = size == 0
 
+/**
+ * @return `true` if this rope byte string is not empty.
+ */
 public fun RopeByteString.isNotEmpty(): Boolean = !isEmpty()
