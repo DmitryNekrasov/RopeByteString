@@ -78,6 +78,13 @@ class RopeByteString private constructor(
         else -> rangeEquals(0, ropeByteString)
     }
 
+    /**
+     * Returns true if this rope byte string ends with the suffix specified by the [ropeByteString].
+     *
+     * Behavior of this method is compatible with [CharSequence.endsWith].
+     *
+     * @param ropeByteString the suffix to check for.
+     */
     public fun endsWith(ropeByteString: RopeByteString): Boolean = when {
         ropeByteString.size > size -> false
         ropeByteString.size == size -> equals(ropeByteString)
