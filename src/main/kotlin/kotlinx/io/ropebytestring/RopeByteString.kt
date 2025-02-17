@@ -133,13 +133,13 @@ class RopeByteString private constructor(
     }
 
     /**
-     * Compares a byte sequence wrapped by this byte string to a byte sequence wrapped by [other]
+     * Compares a byte sequence of this rope byte string to [other] rope byte string
      * in lexicographical order.
      * Byte values are compared as unsigned integers.
      *
      * The behavior is similar to [String.compareTo].
      *
-     * @param other the byte string to compare this string to.
+     * @param other the rope byte string to compare this string to.
      */
     override fun compareTo(other: RopeByteString): Int {
         if (other === this) return 0
