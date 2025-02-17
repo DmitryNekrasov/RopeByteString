@@ -56,6 +56,31 @@ public fun RopeByteString(
     )
 }
 
+/**
+ * An immutable sequence of bytes stored in a rope data structure.
+ *
+ * A rope byte string organizes bytes in a binary tree structure where leaf nodes contain
+ * chunks of the byte sequence and branch nodes combine these chunks. This structure provides
+ * efficient operations for large byte sequences by avoiding copying the entire sequence for
+ * operations like concatenation and substring extraction.
+ *
+ * Key features:
+ * - Immutable: All operations create new instances
+ * - Chunked storage: Bytes are stored in chunks for efficient memory use
+ * - Balanced tree: Can maintain balance for consistent performance
+ * - Cached access: Recent byte accesses are cached for improved performance
+ *
+ * The size of chunks can be configured during construction, with a default of [DEFAULT_CHUNK_SIZE]
+ * and maximum of [MAX_CHUNK_SIZE] bytes. Balance maintenance can be enabled to ensure consistent
+ * performance at the cost of additional operations during modifications.
+ *
+ * @property root The root node of the rope tree structure.
+ * @property maintainBalance Whether to maintain balance in the rope tree structure during operations.
+ * @property cache Cache for recently accessed bytes to improve performance.
+ *
+ * @see TreeNode
+ * @see RopeByteStringCache
+ */
 class RopeByteString private constructor(
     private val root: TreeNode,
     private val maintainBalance: Boolean = false,
