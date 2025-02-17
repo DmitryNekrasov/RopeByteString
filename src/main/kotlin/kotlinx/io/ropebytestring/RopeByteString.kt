@@ -308,8 +308,12 @@ class RopeByteString private constructor(
 
         private fun requireRange(startIndex: Int, endIndex: Int, upperBound: Int) {
             require(startIndex <= endIndex) { "invalid range: $startIndex > $endIndex" }
-            require(startIndex >= 0) { "start index cannot be negative: $startIndex" }
-            require(endIndex <= upperBound) { "end index out of bounds: $endIndex" }
+            if (startIndex < 0) throw IndexOutOfBoundsException(
+                "start index cannot be negative: $startIndex"
+            )
+            if (endIndex > upperBound) throw IndexOutOfBoundsException(
+                "end index out of bounds: $endIndex"
+            )
         }
 
         internal fun splitIntoChunks(

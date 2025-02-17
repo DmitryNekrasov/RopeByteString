@@ -82,9 +82,9 @@ class RopeByteStringSubstringTest {
         val rope = RopeByteString(1, 2, 3, 4, 5)
 
         assertFailsWith<IllegalArgumentException> { rope.substring(3, 2) }
-        assertFailsWith<IllegalArgumentException> { rope.substring(-1, 3) }
-        assertFailsWith<IllegalArgumentException> { rope.substring(0, 6) }
-        assertFailsWith<IllegalArgumentException> { rope.substring(6, 7) }
+        assertFailsWith<IndexOutOfBoundsException> { rope.substring(-1, 3) }
+        assertFailsWith<IndexOutOfBoundsException> { rope.substring(0, 6) }
+        assertFailsWith<IndexOutOfBoundsException> { rope.substring(6, 7) }
     }
 
     @Test
