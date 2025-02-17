@@ -34,6 +34,9 @@ class RopeByteString private constructor(
     private val cache: RopeByteStringCache = LastChunkRopeByteStringCache(),
 ) : Comparable<RopeByteString> {
 
+    /**
+     * Returns size of this RopeByteString.
+     */
     public val size: Int
         get(): Int = root.weight
 
