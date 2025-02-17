@@ -53,6 +53,16 @@ class RopeByteString private constructor(
         return getByteAt(index)
     }
 
+    /**
+     * Returns a copy of subsequence starting at [startIndex] and ending at [endIndex] of a byte sequence
+     * stored in this rope byte string.
+     *
+     * @param startIndex the start index (inclusive) of a subsequence to copy, `0` by default.
+     * @param endIndex the end index (exclusive) of a subsequence to copy, [size] be default.
+     *
+     * @throws IllegalArgumentException when `startIndex > endIndex`.
+     * @throws IndexOutOfBoundsException when [startIndex] or [endIndex] is out of range of rope byte string indices.
+     */
     public fun toByteArray(startIndex: Int = 0, endIndex: Int = size): ByteArray {
         requireRange(startIndex, endIndex, size)
         val result = ByteArray(endIndex - startIndex)
