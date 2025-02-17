@@ -19,7 +19,7 @@ RopeByteStringSubstringBenchmark.slidingWindow:·gc.time                    1024
 
 This report analyzes the performance characteristics of substring operations in RopeByteString compared to ByteString implementations. The analysis is based on benchmark results that measure execution time and memory usage across different string sizes, chunk sizes, and window percentages.
 
-## Theoretical Complexity
+## Theoretical complexity
 
 Before diving into the benchmark results, it's important to understand the theoretical complexity of both implementations:
 
