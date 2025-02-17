@@ -45,6 +45,7 @@ class RopeByteString private constructor(
      * The resulting rope byte string will maintain balance if either this or [other] has balance maintenance enabled.
      *
      * @param other the rope byte string to append to this one
+     *
      * @return a new rope byte string containing the concatenated bytes of this and [other]
      */
     public operator fun plus(other: RopeByteString): RopeByteString =
@@ -56,11 +57,11 @@ class RopeByteString private constructor(
      * @param startIndex the start index (inclusive) of a subsequence to copy.
      * @param endIndex the end index (exclusive) of a subsequence to copy, [size] be default.
      *
-     * @throws IllegalArgumentException when `startIndex > endIndex`.
-     * @throws IndexOutOfBoundsException when [startIndex] or [endIndex] is out of range of rope byte string indices.
-     *
      * @return a new rope byte string containing the bytes from [startIndex] (inclusive) to [endIndex] (exclusive).
      *         Returns an empty rope byte string if [startIndex] equals [endIndex].
+     *
+     * @throws IllegalArgumentException when `startIndex > endIndex`.
+     * @throws IndexOutOfBoundsException when [startIndex] or [endIndex] is out of range of rope byte string indices.
      */
     public fun substring(startIndex: Int, endIndex: Int = size): RopeByteString {
         requireRange(startIndex, endIndex, size)
@@ -74,6 +75,8 @@ class RopeByteString private constructor(
      * Returns a byte at the given index in this rope byte string.
      *
      * @param index the index to retrieve the byte at.
+     *
+     * @return the byte value at the specified [index] in this rope byte string.
      *
      * @throws IndexOutOfBoundsException when [index] is negative or greater or equal to the [size].
      */
