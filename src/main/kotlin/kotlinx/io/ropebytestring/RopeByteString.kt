@@ -521,6 +521,6 @@ public val RopeByteString.indices: IntRange
 public fun RopeByteString.isEmpty(): Boolean = size == 0
 
 /**
- * @return `true` if this rope byte string is not empty.
+ * @return `true` if this rope byte string is not empty
  */
 public fun RopeByteString.isNotEmpty(): Boolean = !isEmpty()
