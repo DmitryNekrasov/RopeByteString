@@ -3,7 +3,7 @@ plugins {
     id("me.champeau.jmh") version "0.7.1"
 }
 
-group = "org.scannorone"
+group = "me.scannorone"
 version = "0.1.0"
 
 repositories {
