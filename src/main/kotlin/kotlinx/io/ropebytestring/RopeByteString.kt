@@ -49,7 +49,9 @@ class RopeByteString private constructor(
     }
 
     public operator fun get(index: Int): Byte {
-        require(index in indices) { "index ($index) is out of rope byte string bounds: [0..$size)" }
+        if (index !in indices) throw IndexOutOfBoundsException(
+            "index ($index) is out of rope byte string bounds: [0..$size)"
+        )
         return getByteAt(index)
     }
 
