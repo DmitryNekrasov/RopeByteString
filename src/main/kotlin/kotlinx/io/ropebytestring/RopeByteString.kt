@@ -40,6 +40,15 @@ class RopeByteString private constructor(
     public operator fun plus(other: RopeByteString): RopeByteString =
         TreeNode.createBranch(root, other.root).toRopeByteString(maintainBalance || other.maintainBalance)
 
+    /**
+     * Returns a new rope byte string starting from [startIndex] and ending at [endIndex].
+     *
+     * @param startIndex the start index (inclusive) of a subsequence to copy.
+     * @param endIndex the end index (exclusive) of a subsequence to copy, [size] be default.
+     *
+     * @throws IllegalArgumentException when `startIndex > endIndex`.
+     * @throws IndexOutOfBoundsException when [startIndex] or [endIndex] is out of range of rope byte string indices.
+     */
     public fun substring(startIndex: Int, endIndex: Int = size): RopeByteString {
         requireRange(startIndex, endIndex, size)
         return when {
