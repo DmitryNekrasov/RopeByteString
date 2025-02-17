@@ -412,6 +412,18 @@ class RopeByteString private constructor(
     }
 }
 
+/**
+ * Converts this byte array into a rope byte string.
+ *
+ * The resulting rope byte string will be split into chunks based on the specified [chunkSize].
+ * If the byte array is smaller than or equal to the chunk size, it will be stored in a single chunk.
+ *
+ * @param chunkSize the maximum size of chunks in the resulting rope byte string.
+ *                  Must be in range 1..[RopeByteString.MAX_CHUNK_SIZE],
+ *                  defaults to [RopeByteString.DEFAULT_CHUNK_SIZE].
+ * @return a new rope byte string containing all bytes from this byte array.
+ *         If this byte array is empty, returns an empty rope byte string.
+ */
 public fun ByteArray.toRopeByteString(chunkSize: Int = RopeByteString.DEFAULT_CHUNK_SIZE): RopeByteString =
     RopeByteString(data = this, chunkSize = chunkSize)
 
