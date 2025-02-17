@@ -115,6 +115,9 @@ class RopeByteString private constructor(
      * Behavior of this method is compatible with [CharSequence.startsWith].
      *
      * @param byteArray the prefix to check for.
+     *
+     * @return `true` if this rope byte string starts with all the bytes in [byteArray] in the same order,
+     *         `false` if either the [byteArray] is longer than this rope byte string or if any bytes differ.
      */
     public fun startsWith(byteArray: ByteArray): Boolean = when {
         byteArray.size > size -> false
@@ -127,6 +130,10 @@ class RopeByteString private constructor(
      * Behavior of this method is compatible with [CharSequence.startsWith].
      *
      * @param ropeByteString the prefix to check for.
+     *
+     * @return `true` if this rope byte string starts with all the bytes in [ropeByteString] in the same order,
+     *         `false` if either the [ropeByteString] is longer than this rope byte string or if any bytes differ.
+     *         Returns `true` if both strings are equal.
      */
     public fun startsWith(ropeByteString: RopeByteString): Boolean = when {
         ropeByteString.size > size -> false
