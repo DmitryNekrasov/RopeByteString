@@ -187,9 +187,6 @@ class RopeByteString private constructor(
      * Returns a string representation of this rope byte string. A string representation consists of [size] and
      * a hexadecimal-encoded string of the byte sequence stored in the rope byte string
      *
-     * The string representation has the following format `RopeByteString(size=3 hex=ABCDEF)`,
-     * for empty strings it's always `RopeByteString(size=0)`.
-     *
      * Note that a string representation includes the whole rope byte string content encoded.
      * Due to limitations exposed for the maximum string length, an attempt to return a string representation
      * of too long rope byte string may fail.
@@ -213,9 +210,9 @@ class RopeByteString private constructor(
     }
 
     /**
-     * Returns `true` if [other] is a rope byte string containing exactly the same byte sequence.
-     *
      * @param other the other object to compare this rope byte string for equality to.
+     *
+     * @return `true` if [other] is a rope byte string containing exactly the same byte sequence.
      */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
