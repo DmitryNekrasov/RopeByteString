@@ -26,7 +26,7 @@ RopeByteString demonstrates significantly better performance compared to ByteStr
 - ByteString sequential concatenation: ~1.3 seconds (1299263 microseconds)
 - RopeByteString sequential concatenation: ~14-20 microseconds (with various chunk sizes)
 
-This dramatic difference occurs because ByteString performs a full copy of all data during each concatenation operation, leading to O(n) (for one concatenation) time complexity where n is the total size of the concatenated data. In contrast, RopeByteString maintains a tree structure that allows for O(1) (just creation one more TreeNode) concatenation operations without immediate data copying.
+This dramatic difference occurs because ByteString performs a full copy of all data during each concatenation operation, leading to $$O(n)$$ (for one concatenation) time complexity where n is the total size of the concatenated data. In contrast, RopeByteString maintains a tree structure that allows for $$O(1)$$ (just creation one more TreeNode) concatenation operations without immediate data copying.
 
 ### Memory usage
 The memory efficiency advantage of RopeByteString is equally impressive. Looking at the garbage collection metrics:
@@ -58,4 +58,4 @@ The performance characteristics make RopeByteString particularly suitable for:
 
 RopeByteString's superior performance in concatenation operations stems from its fundamental design choices that prioritize efficient structural manipulation over immediate data copying. The benchmark results clearly demonstrate that this approach provides both better time complexity and memory efficiency, especially for larger datasets. The implementation successfully achieves its goal of optimizing string concatenation operations while maintaining reasonable memory usage patterns.
 
-The most significant achievement is the transformation of what would be an O(n) operation with traditional ByteString into an O(1) operation with RopeByteString, while simultaneously reducing memory pressure by several orders of magnitude. This makes RopeByteString a compelling choice for applications where string concatenation is a common operation.
+The most significant achievement is the transformation of what would be an $$O(n)$$ operation with traditional ByteString into an $$O(1)$$ operation with RopeByteString, while simultaneously reducing memory pressure by several orders of magnitude. This makes RopeByteString a compelling choice for applications where string concatenation is a common operation.
