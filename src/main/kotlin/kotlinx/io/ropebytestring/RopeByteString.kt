@@ -94,6 +94,9 @@ class RopeByteString private constructor(
      * @param startIndex the start index (inclusive) of a subsequence to copy, `0` by default.
      * @param endIndex the end index (exclusive) of a subsequence to copy, [size] be default.
      *
+     * @return a new byte array containing the bytes from this rope byte string starting at [startIndex] (inclusive)
+     *         through [endIndex] (exclusive). The length of the returned array is `endIndex - startIndex`.
+     *
      * @throws IllegalArgumentException when `startIndex > endIndex`.
      * @throws IndexOutOfBoundsException when [startIndex] or [endIndex] is out of range of rope byte string indices.
      */
