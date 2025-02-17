@@ -1,4 +1,4 @@
-# Performance analysis: ByteString vs RopeByteString concatenation
+# Performance analysis: ByteString vs RopeByteString concatenation operations
 
 Benchmark results fragment:
 ```
