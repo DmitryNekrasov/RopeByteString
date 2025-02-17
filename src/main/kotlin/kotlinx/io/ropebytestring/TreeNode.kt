@@ -2,6 +2,10 @@ package kotlinx.io.ropebytestring
 
 import kotlin.math.max
 
+/**
+ * Internal tree data structure for storing and organizing byte sequences in a rope byte string.
+ * The tree consists of branch nodes that combine other nodes and leaf nodes that store actual byte data.
+ */
 internal sealed class TreeNode {
     abstract val weight: Int
     abstract val depth: Int
