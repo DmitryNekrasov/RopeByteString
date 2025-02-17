@@ -86,11 +86,21 @@ class RopeByteString private constructor(
 
     public fun rebalance(): RopeByteString = RopeByteString(merge(collectAllLeaves()))
 
+    /**
+     * Returns a string representation of this rope byte string. A string representation consists of [size] and
+     * a hexadecimal-encoded string of the byte sequence stored in the rope byte string
+     *
+     * The string representation has the following format `RopeByteString(size=3 hex=ABCDEF)`,
+     * for empty strings it's always `RopeByteString(size=0)`.
+     *
+     * Note that a string representation includes the whole rope byte string content encoded.
+     * Due to limitations exposed for the maximum string length, an attempt to return a string representation
+     * of too long rope byte string may fail.
+     */
     override fun toString(): String {
         if (isEmpty()) {
             return "RopeByteString(size=0)"
         }
-        // format: "RopeByteString(size=XXX hex=YYYY)"
         val sizeStr = size.toString()
         val len = 26 + sizeStr.length + size * 2
         return with(StringBuilder(len)) {
