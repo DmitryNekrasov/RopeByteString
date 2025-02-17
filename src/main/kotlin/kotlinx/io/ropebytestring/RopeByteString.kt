@@ -40,6 +40,13 @@ class RopeByteString private constructor(
     public val size: Int
         get(): Int = root.weight
 
+    /**
+     * Concatenates this rope byte string with [other] and returns a new rope byte string.
+     * The resulting rope byte string will maintain balance if either this or [other] has balance maintenance enabled.
+     *
+     * @param other the rope byte string to append to this one
+     * @return a new rope byte string containing the concatenated bytes of this and [other]
+     */
     public operator fun plus(other: RopeByteString): RopeByteString =
         TreeNode.createBranch(root, other.root).toRopeByteString(maintainBalance || other.maintainBalance)
 
