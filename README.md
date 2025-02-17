@@ -10,9 +10,9 @@ RopeByteString is an immutable sequence of bytes organized in a binary tree stru
 
 The implementation supports several key operations with optimized performance characteristics:
 
-- Concatenation: O(1) time complexity, avoiding data copying
-- Substring extraction: O(log n) time and space complexity
-- Index-based byte access: O(log n) with caching optimization
+- Concatenation: $$O(1)$$ time complexity, avoiding data copying
+- Substring extraction: $$O(log n)$$ time and space complexity
+- Index-based byte access: $$O(log n)$$ with caching optimization
 - Conversion to/from ByteArray
 - String comparison operations (startsWith, endsWith, etc.)
 
@@ -116,4 +116,4 @@ An alternative approach of storing offsets and lengths in leaf nodes was conside
 
 This design decision mirrors the evolution of Java's String class, which similarly moved away from offset-based substrings to copy-based implementations. The current approach provides a better balance between memory efficiency and performance, particularly considering the constant chunk size relative to string length.
 
-The implementation maintains O(log n) complexity for substring operations while ensuring efficient memory utilization through controlled chunk copying. This approach aligns with the broader goals of the RopeByteString implementation: providing efficient string operations while maintaining predictable memory usage patterns.
+The implementation maintains $$O(log n)$$ complexity for substring operations while ensuring efficient memory utilization through controlled chunk copying. This approach aligns with the broader goals of the RopeByteString implementation: providing efficient string operations while maintaining predictable memory usage patterns.
