@@ -120,6 +120,9 @@ class RopeByteString private constructor(
         return true
     }
 
+    /**
+     * Returns a hash code based on the content of this rope byte string.
+     */
     override fun hashCode(): Int {
         var hc = hashCode
         if (hc == 0) {
