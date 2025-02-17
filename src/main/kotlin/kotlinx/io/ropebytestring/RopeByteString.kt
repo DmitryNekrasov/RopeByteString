@@ -12,6 +12,8 @@ import kotlin.math.min
  *
  * @return a new rope byte string containing the specified bytes.
  *         If no bytes are provided, returns an empty rope byte string.
+ *
+ * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.createRopeByteStringFromVarargBytes
  */
 public fun RopeByteString(vararg bytes: Byte): RopeByteString {
     return if (bytes.isEmpty()) RopeByteString.EMPTY else RopeByteString.wrap(bytes)
@@ -35,6 +37,8 @@ public fun RopeByteString(vararg bytes: Byte): RopeByteString {
  *
  * @throws IllegalArgumentException if [startIndex] is greater than [endIndex].
  * @throws IndexOutOfBoundsException if [startIndex] is negative or [endIndex] is greater than [data.size].
+ *
+ * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.createRopeByteStringFromByteArrayWithCustomChunkSize
  */
 public fun RopeByteString(
     data: ByteArray,
@@ -100,6 +104,8 @@ class RopeByteString private constructor(
      * @param other the rope byte string to append to this one
      *
      * @return a new rope byte string containing the concatenated bytes of this and [other]
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.concatenateTwoRopeByteStrings
      */
     public operator fun plus(other: RopeByteString): RopeByteString =
         TreeNode.createBranch(root, other.root).toRopeByteString(maintainBalance || other.maintainBalance)
@@ -115,6 +121,8 @@ class RopeByteString private constructor(
      *
      * @throws IllegalArgumentException when `startIndex > endIndex`.
      * @throws IndexOutOfBoundsException when [startIndex] or [endIndex] is out of range of rope byte string indices.
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.getSubstringFromRopeByteString
      */
     public fun substring(startIndex: Int, endIndex: Int = size): RopeByteString {
         requireRange(startIndex, endIndex, size)
@@ -132,6 +140,8 @@ class RopeByteString private constructor(
      * @return the byte value at the specified [index] in this rope byte string.
      *
      * @throws IndexOutOfBoundsException when [index] is negative or greater or equal to the [size].
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.complexScenario
      */
     public operator fun get(index: Int): Byte {
         if (index !in indices) throw IndexOutOfBoundsException(
@@ -152,6 +162,8 @@ class RopeByteString private constructor(
      *
      * @throws IllegalArgumentException when `startIndex > endIndex`.
      * @throws IndexOutOfBoundsException when [startIndex] or [endIndex] is out of range of rope byte string indices.
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.convertRopeByteStringToByteArray
      */
     public fun toByteArray(startIndex: Int = 0, endIndex: Int = size): ByteArray {
         requireRange(startIndex, endIndex, size)
@@ -171,6 +183,8 @@ class RopeByteString private constructor(
      *
      * @return `true` if this rope byte string starts with all the bytes in [byteArray] in the same order,
      *         `false` if either the [byteArray] is longer than this rope byte string or if any bytes differ.
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.checkIfRopeByteStringStartsWithByteArray
      */
     public fun startsWith(byteArray: ByteArray): Boolean = when {
         byteArray.size > size -> false
@@ -187,6 +201,8 @@ class RopeByteString private constructor(
      * @return `true` if this rope byte string starts with all the bytes in [ropeByteString] in the same order,
      *         `false` if either the [ropeByteString] is longer than this rope byte string or if any bytes differ.
      *         Returns `true` if both strings are equal.
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.checkIfRopeByteStringStartsWithAnotherRopeByteString
      */
     public fun startsWith(ropeByteString: RopeByteString): Boolean = when {
         ropeByteString.size > size -> false
@@ -203,6 +219,8 @@ class RopeByteString private constructor(
      *
      * @return `true` if this rope byte string ends with all the bytes in [byteArray] in the same order,
      *         `false` if either the [byteArray] is longer than this rope byte string or if any bytes differ.
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.checkIfRopeByteStringEndsWithByteArray
      */
     public fun endsWith(byteArray: ByteArray): Boolean = when {
         byteArray.size > size -> false
@@ -219,6 +237,8 @@ class RopeByteString private constructor(
      * @return `true` if this rope byte string ends with all the bytes in [ropeByteString] in the same order,
      *         `false` if either the [ropeByteString] is longer than this rope byte string or if any bytes differ.
      *         Returns `true` if both strings are equal.
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.checkIfRopeByteStringEndsWithAnotherRopeByteString
      */
     public fun endsWith(ropeByteString: RopeByteString): Boolean = when {
         ropeByteString.size > size -> false
@@ -233,6 +253,8 @@ class RopeByteString private constructor(
      * A balanced tree structure ensures more uniform access times across the byte string.
      *
      * @return a new rope byte string with a balanced tree structure containing the same bytes as this rope byte string.
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.complexScenario
      */
     public fun rebalance(): RopeByteString = RopeByteString(merge(collectAllLeaves()))
 
@@ -246,6 +268,8 @@ class RopeByteString private constructor(
      *
      * @return a string in the format `RopeByteString(size=N hex=<hexadecimal>)` where N is the size and
      *         <hexadecimal> is the hex representation of all bytes, or `RopeByteString(size=0)` for empty strings.
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.getStringRepresentationOfRopeByteString
      */
     override fun toString(): String {
         if (isEmpty()) {
@@ -266,6 +290,8 @@ class RopeByteString private constructor(
      * @param other the other object to compare this rope byte string for equality to.
      *
      * @return `true` if [other] is a rope byte string containing exactly the same byte sequence.
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.compareRopeByteStrings
      */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -308,6 +334,8 @@ class RopeByteString private constructor(
      * The behavior is similar to [String.compareTo].
      *
      * @param other the rope byte string to compare this string to.
+     *
+     * @sample kotlinx.io.ropebytestring.samples.RopeByteStringSamples.compareRopeByteStrings
      */
     override fun compareTo(other: RopeByteString): Int {
         if (other === this) return 0

@@ -9,7 +9,7 @@ import kotlin.test.assertTrue
 class RopeByteStringSamples {
 
     @Test
-    fun `create RopeByteString from vararg bytes`() {
+    fun createRopeByteStringFromVarargBytes() {
         val ropeString = RopeByteString(1, 2, 3, 4, 5)
         assertEquals(5, ropeString.size)
         assertEquals(1, ropeString[0])
@@ -17,7 +17,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `create RopeByteString from ByteArray with custom chunk size`() {
+    fun createRopeByteStringFromByteArrayWithCustomChunkSize() {
         val bytes = ByteArray(2000) { it.toByte() }
         val ropeString = RopeByteString(bytes, chunkSize = 500)
         assertEquals(2000, ropeString.size)
@@ -26,7 +26,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `convert ByteArray to RopeByteString`() {
+    fun convertByteArrayToRopeByteString() {
         val bytes = byteArrayOf(10, 20, 30)
         val ropeString = bytes.toRopeByteString()
         assertEquals(3, ropeString.size)
@@ -35,7 +35,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `concatenate two RopeByteStrings`() {
+    fun concatenateTwoRopeByteStrings() {
         val first = RopeByteString(1, 2, 3)
         val second = RopeByteString(4, 5, 6)
         val result = first + second
@@ -46,7 +46,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `get substring from RopeByteString`() {
+    fun getSubstringFromRopeByteString() {
         val original = RopeByteString(1, 2, 3, 4, 5)
         val substring = original.substring(1, 4)
 
@@ -56,7 +56,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `convert RopeByteString to ByteArray`() {
+    fun convertRopeByteStringToByteArray() {
         val ropeString = RopeByteString(1, 2, 3, 4, 5)
         val byteArray = ropeString.toByteArray()
 
@@ -66,7 +66,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `check if RopeByteString starts with ByteArray`() {
+    fun checkIfRopeByteStringStartsWithByteArray() {
         val ropeString = RopeByteString(1, 2, 3, 4, 5)
         val prefix = byteArrayOf(1, 2, 3)
 
@@ -75,7 +75,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `check if RopeByteString starts with another RopeByteString`() {
+    fun checkIfRopeByteStringStartsWithAnotherRopeByteString() {
         val ropeString = RopeByteString(1, 2, 3, 4, 5)
         val prefix = RopeByteString(1, 2, 3)
 
@@ -84,7 +84,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `check if RopeByteString ends with ByteArray`() {
+    fun checkIfRopeByteStringEndsWithByteArray() {
         val ropeString = RopeByteString(1, 2, 3, 4, 5)
         val suffix = byteArrayOf(3, 4, 5)
 
@@ -93,7 +93,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `check if RopeByteString ends with another RopeByteString`() {
+    fun checkIfRopeByteStringEndsWithAnotherRopeByteString() {
         val ropeString = RopeByteString(1, 2, 3, 4, 5)
         val suffix = RopeByteString(3, 4, 5)
 
@@ -102,7 +102,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `rebalance RopeByteString`() {
+    fun complexScenario() {
         var unbalanced = RopeByteString(1, 2, 3)
         for (i in 0..10) {
             unbalanced += RopeByteString((i * 3 + 4).toByte(), (i * 3 + 5).toByte(), (i * 3 + 6).toByte())
@@ -133,7 +133,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `check RopeByteString emptiness`() {
+    fun checkRopeByteStringEmptiness() {
         val empty = RopeByteString()
         val nonEmpty = RopeByteString(1, 2, 3)
 
@@ -144,7 +144,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `access RopeByteString indices`() {
+    fun accessRopeByteStringIndices() {
         val ropeString = RopeByteString(1, 2, 3)
         val range = ropeString.indices
 
@@ -153,7 +153,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `compare RopeByteStrings`() {
+    fun compareRopeByteStrings() {
         val first = RopeByteString(1, 2, 3)
         val second = RopeByteString(1, 2, 4)
         val third = RopeByteString(1, 2, 3)
@@ -164,7 +164,7 @@ class RopeByteStringSamples {
     }
 
     @Test
-    fun `get string representation of RopeByteString`() {
+    fun getStringRepresentationOfRopeByteString() {
         val ropeString = RopeByteString(0xAB.toByte(), 0xCD.toByte())
         assertEquals("RopeByteString(size=2 hex=abcd)", ropeString.toString())
     }
