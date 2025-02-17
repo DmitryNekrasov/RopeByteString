@@ -48,6 +48,13 @@ class RopeByteString private constructor(
         }
     }
 
+    /**
+     * Returns a byte at the given index in this rope byte string.
+     *
+     * @param index the index to retrieve the byte at.
+     *
+     * @throws IndexOutOfBoundsException when [index] is negative or greater or equal to the [size].
+     */
     public operator fun get(index: Int): Byte {
         if (index !in indices) throw IndexOutOfBoundsException(
             "index ($index) is out of rope byte string bounds: [0..$size)"
